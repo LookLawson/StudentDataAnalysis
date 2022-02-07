@@ -88,7 +88,8 @@ class Student:
             self.LEVL_CODE = "UG"
 
         # TODO: Account for inactive and non-Edinburgh campus students
-        self.CAMP_CODE = "Edinburgh"
+        self.CAMP_CODE = "1ED"
+        self.CAMP_DESC = "Edinburgh"
         self.ACTIVE_STATUS = "AS"
 
         if self.ACTIVE_STATUS == "AS":
@@ -130,7 +131,7 @@ def genUsername(userInitials):
 
 # region "File" Functions
 def writeCSV(header, data):
-    with open("output.txt", "w", newline='') as f:
+    with open("output.csv", "w", newline='') as f:
         writer = csv.writer(f)
         writer.writerow(header)
         for row in data:
