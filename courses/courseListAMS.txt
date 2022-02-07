@@ -1,0 +1,108 @@
+
+Actuarial Mathematics and Statistics Courses
+SCQF Level 7 Courses (Typically taught in Year 1)
+Semester 1
+
+    F77SA Introduction to Statistical Science A
+
+Semester 2
+
+    F77PD Professional Development Planning
+    F77SB Introduction to Statistical Science B
+
+SCQF Level 8 Courses (Typically taught in Year 2)
+Semester 1
+
+    F78AA Actuarial and Financial Mathematics A
+    F78AP Algorithmic Scientific Programming
+    F78PA Probability and Statistics A
+    F78QT Quantitative Methods 1
+
+Semester 2
+
+    F78AB Actuarial and Financial Mathematics B
+    F78PB Probability and Statistics B
+    F78SC Statistics for Science
+
+SCQF Level 9 Courses (Typically taught in Year 3 – some in Year 4)
+Semester 1
+
+    F79MA Statistical Models A (Project Course)
+    F79PA Portfolio Theory & Asset Models
+    F79PS Statistics for Social Science
+    F79SP Stochastic Processes
+
+Semester 2
+
+    F79BI Bayesian Inference & Computational Methods
+    F79DF Derivative Markets and Discrete-time Finance
+    F79MB Statistical Models B (Project Course)
+    F79SU Survival Models
+
+SCQF Level 10 Courses (Typically taught in Year 4 – some in Year 3)
+Semester 1
+
+    F70CF Continuous-Time Finance
+    F70LA Life Insurance Mathematics A
+    F70PE Pensions
+
+Semester 2
+
+    F70DP Advanced Derivative Pricing
+    F70LB Life Insurance Mathematics B
+    F70LP Life Office Practice
+    F70RT Risk Theory
+    F70TS Time Series
+    F71AP/F70DP Advanced Derivative Pricing
+    F71OM Optimization Methods in Finance
+
+SCQF Level 11 Courses (Typically taught in MSc – some in Year 4)
+Semester 1
+
+    F71AB Financial Mathematics
+    F71AF Life Insurance Mathematics 1
+    F71CA Actuarial Risk Management 1
+    F71DM Derivatives Markets
+    F71DT Discrete-Time Finance
+    F71DV Derivatives Markets and Pricing
+    F71LA Life Insurance 1
+    F71MA Statistical Models
+    F71PC Pensions A
+    F71PM Probabilistic Methods
+    F71QR Quantitative Risk Analysis
+    F71RA Machine Learning for Risk and Insurance 1
+    F71SM Statistical Methods
+    F71ST Statistical Inference
+    F71SZ Stochastic Modelling
+
+Semester 2
+
+    F71AE Survival Models
+    F71AG Risk Theory
+    F71AH Financial Economics 1
+    F71AJ Financial Economics II
+    F71AP Advanced Derivative Pricing
+    F71AP/F70DP Advanced Derivative Pricing
+    F71AR Applied Risk Management
+    F71BF Life Insurance Mathematics 2
+    F71BI Bayesian Inference and Computational Methods
+    F71CB Actuarial Risk Management 2
+    F71CM Credit Risk Modelling
+    F71DA Data Analytics and Time Series Analysis
+    F71DP Derivative Pricing and Financial Modelling
+    F71LB Life Insurance 2
+    F71NP Numerical Probability and Monte Carlo
+    F71OM Optimization Methods in Finance
+    F71PD Pensions B
+    F71PT Portfolio Theory
+    F71RB Machine Learning for Risk and Insurance 2
+    F71SP Applied Stochastic Processes
+    F71TS Time Series Analysis
+    F71TT Risk Management: Techniques and Tools
+
+Semester 3
+
+    F71DD MSc Dissertation
+    F71FD Dissertation (Financial Mathematics)
+    F71SD Dissertation
+

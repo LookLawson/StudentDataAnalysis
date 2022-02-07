@@ -1,0 +1,71 @@
+
+BSc Computer Science
+
+This programme is available in Edinburgh, Dubai
+
+Programme Director: Dr Stefano Padilla (Edinburgh), Talal Shaikh (Dubai)
+
+Programme Code: F291-COS
+
+For further information about course choices consult:
+
+    Programme Structure and Progression Rules
+
+Accreditation: BSc (Hons) Computer Science is accredited by British Computer Society, the Chartered Institute for IT.
+Year 1
+
+Year Co-ordinator(s):
+Dr Robert Stewart (Edinburgh)
+Dr Adrian Turcanu (Dubai)
+Adrian Turcanu
+Dr Rob Stewart
+
+Semester 1	Semester 2
+F27SA Software Development 1	F27SB Software Development 2
+F27ID Introduction to Interaction Design	F17SC Discrete Mathematics
+F27PX Praxis	F27CS Introduction to Computer Systems
+F17LP Logic and Proof	F27WD Web Design and Databases
+Year 2
+
+Year Co-ordinator(s):
+Dr Phil Bartie (Edinburgh)
+Dr Ryad Soobany (Dubai)
+Dr Phil Bartie
+Semester 1	Semester 2
+F28ED User-Centred Experimental Design	F28SD Introduction to Software Engineering
+F28WP Web Programming	F28DM Database Management
+F28SG Introduction to Data Structures & Algorithms	F28HS Hardware-Software Interface
+F28PL Programming Languages	F28DA Data Structures & Algorithms
+Year 3
+
+Year Co-ordinator(s):
+
+Dr Sasa Radomirovic (Edinburgh)
+
+To be confirmed (Dubai)
+Sasa Radomirovic
+Semester	Semester 2
+F29SO Software Engineering	F29PD Professional Development
+F29DC Data Communications & Networking	F29OC Operating Systems & Concurrency
+F29AI Artificial Intelligence & Intelligent Agents	F29LP Language Processors
+F29FA Foundations 1	F29FB Foundations 2
+Year 4
+
+Year Co-ordinator(s):
+Professor Albert Burger (Edinburgh)
+Dr Hani Ragab Hassen (Dubai)
+Hani Ragab Hassen
+Albert Burger
+Semester 1 (Mandatory)	Semester 2 (Mandatory)
+F20PA Project: Research Methods & Requirements Engineering	F20PB Project: Design & Implementation
+ 	F20PC Project: Testing & Implementation
+(Optional – Choose 3) 	Optional (Choose 2)
+F20BC Biologically Inspired Computation	F20AA Applied Text Analytics (Dubai only)
+F20CN Computer Network Security	F20AD Advanced Interaction Design
+F20DL Data Mining & Machine Learning	F20AN Advanced Network Security
+F20GA 3D Graphics and Animation	F20BD Big Data Management
+F20IF Information System Methodologies	F20DP Distributed & Parallel Technologies (Edinburgh only)
+F20RO Intelligent Robotics	F20DV Data Visualisation & Analytics
+F20RS Rigorous Methods for Software Engineering	F20EC E-Commerce Technology
+F20SA Statistical Modelling & Analysis	F20FO Digital Forensics (Dubai only)
+F20SC Industrial Programming	F20GP Computer Games Programming

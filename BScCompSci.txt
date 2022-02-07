@@ -1,0 +1,43 @@
+BSc Computer Science (& All specialisations) + MEng Soft Eng
+
+Year 1
+Semester 1                                  Semester 2
+F27SA Software Development 1                F27SB Software Development 2
+F27ID Introduction to Interaction Design	F17SC Discrete Mathematics
+F27PX Praxis	                            F27CS Introduction to Computer Systems
+F17LP Logic and Proof	                    F27WD Web Design and Databases
+
+=========================================================================
+
+Year 2
+Semester 1                                          Semester 2
+F28ED User-Centred Experimental Design	            F28SD Introduction to Software Engineering
+F28WP Web Programming	                            F28DM Database Management
+F28SG Introduction to Data Structures & Algorithms	F28HS Hardware-Software Interface
+F28PL Programming Languages	                        F28DA Data Structures & Algorithms
+
+=========================================================================
+
+Year 3
+Semester 1                                          Semester 2
+F29SO Software Engineering	                        F29PD Professional Development
+F29DC Data Communications & Networking	            F29OC Operating Systems & Concurrency
+F29AI Artificial Intelligence & Intelligent Agents	F29LP Language Processors
+F29FA Foundations 1	                                F29FB Foundations 2
+
+=========================================================================
+
+Year 4*
+Semester 1                                                  Semester 2
+F20PA Project: Research Methods & Requirements Engineering	F20PB Project: Design & Implementation
+B81PI Professional & Industrial Studies (Only MEng SoftEng) F20PC Project: Testing & Implementation
+[Semester 1 Electives]                                      [Semester s2 Electives]
+F20BC Biologically Inspired Computation	                    F20AA Applied Text Analytics (Dubai only)
+F20CN Computer Network Security	                            F20AD Advanced Interaction Design
+F20DL Data Mining & Machine Learning	                    F20AN Advanced Network Security
+F20GA 3D Graphics and Animation	                            F20BD Big Data Management
+F20IF Information System Methodologies	                    F20DP Distributed & Parallel Technologies (Edinburgh only)
+F20RO Intelligent Robotics	                                F20DV Data Visualisation & Analytics
+F20RS Rigorous Methods for Software Engineering	            F20EC E-Commerce Technology
+F20SA Statistical Modelling & Analysis	                    F20GP Computer Games Programming
+F20SC Industrial Programming

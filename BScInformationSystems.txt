@@ -1,0 +1,40 @@
+BSc Information Systems (& All specialisations)
+
+Year 1
+Semester 1	                                Semester 2
+F27SA Software Development 1	            C18TP Enterprise: Concepts and Issues
+F27ID Introduction to Interaction Design	F27TS Technology in Society
+F27PX Praxis	                            F27CS Introduction to Computer Systems
+ + 1 Elective Course	                    F27WD Web Design and Databases
+
+=========================================================================
+
+Year 2
+Semester 1	                            Semester 2
+F28ED User-Centred Experimental Design	F28SD Introduction to Software Engineering
+C18FM Fundamentals of Marketing	        F28DM Database Management
+C17EB Management in a Global Context	F28CD Creative Design Project
+C19PT Project Management	            C18OP Operations Management
+
+=========================================================================
+
+Year 3
+Semester 1	                    Semester 2
+F29SO Software Engineering	    F29PD Professional Development
+F29KM Knowledge Management	    F29SS Sociotechnical & Soft Systems Methodologies
+F29CT Critical Thinking	        C18OB Organisational Behaviour
+C18HM Human Resource Management	C19MC Marketing Communications
+
+=========================================================================
+
+Year 4
+Semester 1 (Mandatory)	                                    Semester 2 (Mandatory)
+F20PA Project: Research Methods & Requirements Engineering	F20PB Project: Design & Implementation
+	                                                        F20PC Project: Testing & Implementation
+Semester 1 (Elective) 	                                    Semester 2 (Elective)
+F20IF Information System Methodologies 	                    F20AD Advanced Interaction Design
+F20IM IT Master Class 	                                    F20BD Big Data Management
+F20SF Software Engineering Foundations 	                    F20DE Digital & Knowledge Economy
+C10RS Retail Marketing 	                                    F20EC E-Commerce Technology
+C10CW The Contemporary Workforce 	                        C10DM Digital Marketing
+	                                                        C10SM Marketing & Management in SMEs

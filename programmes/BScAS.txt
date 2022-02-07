@@ -1,0 +1,12 @@
+First Year Courses
+1st Semester Courses Req’d Opt. Elect.
+F77SA Introduction to Statistical Science A AS,FM,SD
+F77CA Calculus A AS,FM,SD
+F17CC An introduction to university mathematics AS,FM,SD
+C27IE Introductory Economics FM AS,SD
+C37FA Introduction to Accounting AS
+2nd Semester Courses Req’d Opt. Elect.
+F77SB Introduction to Statistical Science B AS,FM,SD
+F17CB Calculus B AS,FM,SD
+F77PD Professional Development Planning AS,FM,SD
+C37FF Finance & Financial Reporting FM AS,SD
