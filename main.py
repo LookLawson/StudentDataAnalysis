@@ -12,7 +12,7 @@ from pathlib import Path
 from collections import OrderedDict
 
 # region Variables
-studentCount = 10
+studentCount = 20
 currentAcademicYear = 202122
 
 # region Programmes and Courses
