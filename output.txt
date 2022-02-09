@@ -1,6 +1,0 @@
-BANNER_ID,TITLE,LAST_NAME,FIRST_NAME,MIDDLE_NAME,ACTIVE_STATUS,PROG_CODE,PROG_DESC,LEVL_CODE,CAMP_CODE,CAMP_DESC,TERM_CODE,YOS_CODE,USERNAME
-H00290401,Ms,Harris,Patricia,Anne,AS,F291-COS,BSc Computer Science,UG,1ED,Edinburgh,202122,4,pah86
-H00377896,Mr,Cox,Karl,Julian,AS,F291-COS,BSc Computer Science,UG,1ED,Edinburgh,202122,4,kjc70
-H00366922,Mr,Gardner,Toby,Aaron,AS,F291-COS,BSc Computer Science,UG,1ED,Edinburgh,202122,4,tag1
-H00229760,Mr,Reed,Colin,,AS,F291-COS,BSc Computer Science,UG,1ED,Edinburgh,202122,4,cr31
-H00297859,Mrs,Alexander,Georgia,Tracey,AS,F291-COS,BSc Computer Science,UG,1ED,Edinburgh,202122,4,gta77

@@ -3,6 +3,7 @@ import csv
 import sys
 import string
 import random
+import pandas as pd
 import os
 import re
 from faker import Faker
@@ -11,13 +12,12 @@ from pathlib import Path
 from collections import OrderedDict
 
 # region Variables
-studentCount = 5
+studentCount = 10
 currentAcademicYear = 202122
 
 # region Programmes and Courses
-sem1Courses, sem2Courses, sem3Courses = {}, {}, {}
-progCodes = ["F291-COS"]
-programmes = { "F291-COS": "BSc Computer Science"}
+courses = {}
+programmes = {}
 
 # endregion
 
@@ -28,24 +28,73 @@ uniqueUserIDs = []
 # endregion
 
 
-# TODO: Restructure to account for possible existence of optional courses
 class Programme:
     PROG_DESC = ""
     PROG_CODE = ""
 
     mandCourses = {
-        "y1": [],
-        "y2": [],
-        "y3": [],
-        "y4": []
+        1: [[], [], []],
+        2: [[], [], []],
+        3: [[], [], []],
+        4: [[], [], []],
+        5: [[], [], []]
     }
     optCourses = {
-        "y1": [],
-        "y2": [],
-        "y3": [],
-        "y4": []
+        1: [[], [], []],
+        2: [[], [], []],
+        3: [[], [], []],
+        4: [[], [], []],
+        5: [[], [], []]
     }
-    optCount = [[0, 0], [0, 0], [0, 0], [0, 0]]
+    optCount = {
+        1: [0, 0, 0],
+        2: [0, 0, 0],
+        3: [0, 0, 0],
+        4: [0, 0, 0]
+    }
+
+    def __init__(self, row):
+        try:
+            self.COURSE_DESC = row[8].strip()
+            # TODO: Make CSV include course code, then use this properly
+            self.PROG_CODE = self.PROG_DESC
+            self.addCourse(row)
+            year = int(row[5][0])
+            semester = int(row[4][0]) - 1
+            if row[6] != "":
+                self.optCount[year][semester] = int(row[6][0])
+            else:
+                self.optCount[year][semester] = 0
+        except Exception as e:
+            print(e)
+            print(row)
+
+    def addCourse(self, row):
+        try:
+            year = int(row[5][0])
+            semester = int(row[4][0]) - 1
+            if "mandatory" in row[3].lower():
+                self.mandCourses[year][semester].append(self.PROG_CODE)
+            else:
+                self.optCourses[year][semester].append(self.PROG_CODE)
+        except Exception as e:
+            print(row)
+            print(e)
+
+
+class Course:
+    COURSE_CODE = COURSE_TITLE = ""
+    PTRM = CREDIT_HOURS = 0
+
+    def __init__(self, row):
+        try:
+            self.COURSE_CODE = row[1].strip()
+            # TODO: Fix regex sanitization to remove parenthesis and asterix
+            self.COURSE_TITLE = re.sub("[([].*?[)]]", "", row[2]).strip()
+            self.PTRM = int(row[4][0])
+        except Exception as e:
+            print(e)
+            print("/nSomething is wrong with line: /n" + row)
 
 
 class Student:
@@ -80,8 +129,8 @@ class Student:
         # endregion
 
         # region Course Information Generation
-        self.PROG_CODE = random.choice(progCodes)
-        self.PROG_DESC = programmes[self.PROG_CODE]
+        self.PROG_CODE = random.choice(list(programmes.keys()))
+        self.PROG_DESC = programmes[self.PROG_CODE].PROG_DESC
 
         if ("MSc" in self.PROG_DESC or "PhD" in self.PROG_DESC) and int(self.YOS_CODE) > 4:
             self.LEVL_CODE = "PG"
@@ -98,16 +147,6 @@ class Student:
         else:
             self.TERM_CODE = random.choice(["202021", "201920", "201819", "201718", "201617", "201516"])
         # endregion
-
-
-def pickClasses(course: string, yearOfStudy: int):
-    if course == "BSc Computer Science":
-        return []
-    elif course == "BSc Information Systems":
-        return []
-    elif course == "MSc Software Engineering":
-        return []
-    return []
 
 
 # region "Gen" Functions
@@ -150,79 +189,51 @@ def readHeaders(filename: string):
             for element in row:
                 header.append(element.strip())
     return header
-
-
-def readCourseList(folderPath: string):
-    courseSemester = 1
-    directory = os.getcwd()
-    os.chdir(folderPath)
-    for file in os.listdir():
-        if file.endswith(".txt"):
-            file_path = Path(file)
-            with open(file_path, 'r') as f:
-                for line in f.readlines():
-                    match = re.search(r'\s[A-Z]+[0-9]{2}[A-Z]{2}\s', line)
-                    if match:
-                        courseCode = match.group(0).strip()
-                        courseName = line[10:-1]
-                        if courseSemester == 1:
-                            sem1Courses[courseCode] = courseName
-                        elif courseSemester == 2:
-                            sem2Courses[courseCode] = courseName
-                        elif courseSemester == 3:
-                            sem3Courses[courseCode] = courseName
-                    elif line.startswith("Semester "):
-                        courseSemester = int(line[-2:])
-    os.chdir(directory)
-
-
-# TODO: Fix.
-def readProgrammeList(folderPath: string):
-    programmeYear = 0
-    optionalFlagS1 = False
-    optionalFlagS2 = False
-    directory = os.getcwd()
-    os.chdir(folderPath)
-    for file in os.listdir():
-        if file.endswith(".txt"):
-            p = Programme()
-            file_path = Path(file)
-            with open(file_path, 'r') as f:
-                for line in f.readlines():
-                    match = re.findall(r'\s[A-Z]+[0-9]{2}[A-Z]{2}\s', line)
-
-                    if line.startswith("Programme Code: "):
-                        p.PROG_CODE = line[-9:-1]
-                    elif line.startswith("Year ") and len(line) == 7:
-                        programmeYear = int(line[-2:-1])
-                        optionalFlagS1 = False
-                        optionalFlagS2 = False
-
-                    elif "Optional" in line:
-                        # Matches on Optional after a tab - Second Semester
-                        opt = re.match(r'\t.*[Optional].*[)]', line)
-                        if opt.group(0)[-2:-1].isnumeric():
-                            p.optCount[programmeYear, 1] = int(opt.group(0)[-2:-1])
-
-    os.chdir(directory)
-    return []
-
-
 # endregion
+
+
+def readProgrammes(fileName: string):
+    # Read xlsx and write to csv
+    curDir = os.getcwd()
+    df = pd.ExcelFile(fileName)
+    for sheet in df.sheet_names:
+        if "raw" not in sheet.lower():
+            df.parse(sheet_name=sheet).to_csv("programmes\\" + sheet + ".csv")
+    # Read csv
+    os.chdir("programmes")
+    for file in os.listdir():
+        if file.endswith(".csv"):
+            file_path = Path(file)
+            with open(file_path, 'r') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if row[0] != "":
+                        # Add courses to a dictionary of CourseCode: CourseObject
+                        if row[1] not in courses and re.match(r'[A-Z]+[0-9]{2}[A-Z]{2}', row[1]):
+                            courses[row[1]] = Course(row)
+                        # Add Programmes to a dictionary of ProgCode: ProgrammeObject
+                        if row[8] not in programmes:
+                            p = Programme(row)
+                            programmes[row[8]] = p
+                        else:
+                            programmes[row[8]].addCourse(row)
+    os.chdir(curDir)
 
 
 if __name__ == '__main__':
     students = []
     headers = readHeaders(sys.argv[1])
-    readCourseList("courses")
-
-    # Create Student Objects and store them in a list
+    # Also reads courses from it
+    readProgrammes("ProgrammeData.xlsx")
 
     faker = Faker(["en_GB"])
     for i in range(studentCount):
         s = Student(faker)
         students.append(s)
-    # for student in students:
-    #     print(student.__dict__)
+
+    # for c in courses:
+    # print(courses[c].COURSE_CODE + " " + courses[c].COURSE_TITLE)
+    # for p in programmes:
+    #    print(p)
 
     writeCSV(headers, students)
