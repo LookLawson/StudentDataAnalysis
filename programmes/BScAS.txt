@@ -1,12 +1,82 @@
-First Year Courses
-1st Semester Courses Req’d Opt. Elect.
-F77SA Introduction to Statistical Science A AS,FM,SD
-F77CA Calculus A AS,FM,SD
-F17CC An introduction to university mathematics AS,FM,SD
-C27IE Introductory Economics FM AS,SD
-C37FA Introduction to Accounting AS
-2nd Semester Courses Req’d Opt. Elect.
-F77SB Introduction to Statistical Science B AS,FM,SD
-F17CB Calculus B AS,FM,SD
-F77PD Professional Development Planning AS,FM,SD
-C37FF Finance & Financial Reporting FM AS,SD
+
+BSc Actuarial Science
+
+Programme Code: F723-ACS
+
+For further information about course choices consult:
+
+    Programme Structure and Progression Rules
+
+Year 1
+
+Year Co-ordinator(s):
+Prof Jennie Hansen (Edinburgh)
+Jennie Hansen
+
+Semester 1 Timetable
+
+Semester 2 Timetable
+Semester 1 (Mandatory)	Semester 2 (Mandatory)
+F17CA Calculus A	F17CB Calculus B
+F77SA Introduction to Statistical Science A	F77SB Introduction to Statistical Science B
+Semester 1 (Optional)	F77PD Professional Development Planning
+F17LP Logic and Proof	Semester 1 (Optional)
+F17CC Introduction to University Mathematics	F17SC Discrete Mathematics
+C27IE Introductory Economics	C37FF Finance and Financial Reporting
+Year 2
+
+Year Co-ordinator(s):
+Dr Ian Sharpe (Edinburgh)
+Kai Lin Ong (Malaysia)
+Kai Lin Ong
+Ian Sharpe
+
+Edinburgh Semester 1 Timetable
+
+Edinburgh Semester 2 Timetable
+Semester 1 (Mandatory)	Semester 2 (Mandatory)
+F18CD Multivariable Calculus & Real Analysis A	F18CE Multivariable Calculus & Real Analysis B
+F18CF Linear Algebra	F78AB Actuarial and Financial Mathematics B
+F78AA Actuarial and Financial Mathematics A (7.5 Credits)	F78PB Probability and Statistics B
+F78AP Algorithmic and Scientific Programming (7.5 Credits)	Semester 2 (Optional)
+F78PA Probability and Statistics A	F18NA Numerical Analysis A (Edinburgh Only)
+ 	C37FF Finance and Financial Reporting *
+ 	F28DM Database Management Systems
+
+* Only for Direct Entrants To Stage 2
+Year 3
+
+Year Co-ordinator(s):
+Prof George Streftaris  (Edinburgh)
+Larry O’Brien (Malaysia)
+This image has an empty alt attribute; its file name is GStreftaris.jpg
+
+Edinburgh Semester 1 Timetable
+
+Edinburgh Semester 2 Timetable
+Semester 1 (Optional)	Semester 2 (Optional)
+F79MA Statistical Models A	F79MB Statistical Models B
+F79SP Stochastic Processes	F79SU Survival Models
+F79PA Portfolio Theory and Asset Models	F79DF Derivative Markets and Discrete-Time Finance
+F70LA Life Insurance Mathematics A	F70LB Life Insurance Mathematics B
+Year 4
+
+Year Co-ordinator(s):
+John Phillips (Edinburgh)
+Suzan Jabbar Obaiys (Malaysia)
+Suzan Jabbar Obaiys
+John Phillips
+
+Semester 1 Timetable
+
+Semester 2 Timetable
+Semester 1 (Optional)	Semester 2 (Optional)
+F79PS Statistics for Social Science	F79BI Bayesian Inference & Computational Methods
+F70PE Pensions	F70RT Risk Theory
+F70CF Continous-Time Finance	F70TS Time Series Analysis
+F10MM Optimisation	F70LP Life Office Practice
+C39SM International Bonds and Currency Markets	F19MO Ordinary Differential Equations
+F79PA Portfolio Theory and Asset Models *	C39TA Taxation
+F71AB Financial Mathematics *	F71AJ Financial Economics 2 *
+C27IE Introductory Economics *	F71TT Risk Management: Techniques & Tools
+F20ML Statistical Machine Learning	C37FF Finance and Financial Reporting *

@@ -45,6 +45,7 @@ class Programme:
         "y3": [],
         "y4": []
     }
+    optCount = [[0, 0], [0, 0], [0, 0], [0, 0]]
 
 
 class Student:
@@ -177,7 +178,9 @@ def readCourseList(folderPath: string):
 
 # TODO: Fix.
 def readProgrammeList(folderPath: string):
-    programmeYear = 1
+    programmeYear = 0
+    optionalFlagS1 = False
+    optionalFlagS2 = False
     directory = os.getcwd()
     os.chdir(folderPath)
     for file in os.listdir():
@@ -186,14 +189,21 @@ def readProgrammeList(folderPath: string):
             file_path = Path(file)
             with open(file_path, 'r') as f:
                 for line in f.readlines():
-
                     match = re.findall(r'\s[A-Z]+[0-9]{2}[A-Z]{2}\s', line)
-                    if match is not []:
-                        return
+
+                    if line.startswith("Programme Code: "):
+                        p.PROG_CODE = line[-9:-1]
                     elif line.startswith("Year ") and len(line) == 7:
                         programmeYear = int(line[-2:-1])
-                    elif line.startswith("Programme Code: "):
-                        p.PROG_CODE = line[-9:-1]
+                        optionalFlagS1 = False
+                        optionalFlagS2 = False
+
+                    elif "Optional" in line:
+                        # Matches on Optional after a tab - Second Semester
+                        opt = re.match(r'\t.*[Optional].*[)]', line)
+                        if opt.group(0)[-2:-1].isnumeric():
+                            p.optCount[programmeYear, 1] = int(opt.group(0)[-2:-1])
+
     os.chdir(directory)
     return []
 
