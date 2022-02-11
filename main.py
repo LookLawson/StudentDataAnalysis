@@ -12,7 +12,7 @@ from pathlib import Path
 from collections import OrderedDict
 
 # region Variables
-studentCount = 3
+studentCount = 100
 currentAcademicYear = 202122
 currentSemester = 2
 courses = {}
@@ -83,12 +83,18 @@ class Course:
     def __init__(self, row):
         try:
             self.COURSE_CODE = row[1].strip()
-            self.COURSE_TITLE = re.sub("[([].*?[)]]", "", row[2]).strip()
+            self.COURSE_TITLE = re.sub("\(.*\)", "", row[2]).strip()
             if isinstance(row[4], int):
                 self.PTRM = row[4]
             else:
                 self.PTRM = int(row[4][0])
-            self.CREDIT_HOURS = 15
+            # TODO: Future format of CSV may have credits in its own column. For now its within the description
+            creds = re.match(r'^.*?\([^\d]*(\d+\.*\d+)[^\d]*\).*$', row[2])
+            if creds and float(creds.group(1)) < 20:
+                self.CREDIT_HOURS = float(creds.group(1))
+            else:
+                self.CREDIT_HOURS = 15.0
+
         except Exception as e:
             print(e)
             print("/nSomething is wrong with line: /n" + row)
@@ -96,14 +102,13 @@ class Course:
 
 class Student:
 
-
     def __init__(self, f):
         self.ESTS_CODE = "EN"  # Language?
         self.ACTIVE_COURSES = []
         self.COMPLETED_COURSES = []
         self.__genPersonalInfo(f)
         self.__genCourseInfo()
-        self.__genCoursesOLD()
+        self.__genCourses()
 
     def __genPersonalInfo(self, f):
         self.BANNER_ID = genHWUid()
@@ -134,7 +139,14 @@ class Student:
 
         if "MSc" in self.PROG_DESC or "PhD" in self.PROG_DESC:
             # TODO: You're still an UG until year 5 even if you're own a MSc course though right?
-            self.YOS_CODE = random.randrange(1, 6)
+
+            # Check to see which years in a programme actually contain courses
+            validYears = []
+            for year in programmes[self.PROG_CODE].mandCourses:
+                if any(programmes[self.PROG_CODE].mandCourses[year]):
+                    validYears.append(year)
+            self.YOS_CODE = random.randrange(0, max(validYears))+1
+
             if self.YOS_CODE != 5:
                 self.LEVL_CODE = "UG"
             else:
@@ -153,83 +165,100 @@ class Student:
         else:
             self.TERM_CODE = random.choice(["202021", "201920", "201819", "201718", "201617", "201516"])
 
-    def __genCoursesOLD(self):
-        # TODO: Account for courses that earn 7.5 Credits
-        for i in range(self.YOS_CODE + 1):
-
-            # For Current Year
-            if i == self.YOS_CODE:
-                # Add Mandatory Courses
-                for semester in programmes[self.PROG_CODE].mandCourses[self.YOS_CODE]:
-                    if semester:
-                        for course in semester:
-                            self.ACTIVE_COURSES.append(course)
-
-                # Add Optional Courses
-                for semester in programmes[self.PROG_CODE].optCourses[self.YOS_CODE]:
-                    if semester:
-                        # Semester 1
-                        if programmes[self.PROG_CODE].optCount[self.YOS_CODE][0] != 0:
-                            for j in range(programmes[self.PROG_CODE].optCount[self.YOS_CODE][0]):
-                                course = random.choice(semester)
-                                if course not in self.ACTIVE_COURSES and currentSemester == course.PTRM:
-                                    self.ACTIVE_COURSES.append(course)
-                        # Some tables don't explicitly say how many optional courses you can take
-                        else:
-                            while len(self.ACTIVE_COURSES) < 4:
-                                course = random.choice(semester)
-                                if course not in self.ACTIVE_COURSES and currentSemester == semester[course].PTRM:
-                                    self.ACTIVE_COURSES.append(course)
-                        # Semester 2
-                        if programmes[self.PROG_CODE].optCount[self.YOS_CODE][1] != 0:
-                            for j in range(programmes[self.PROG_CODE].optCount[self.YOS_CODE][1]):
-                                course = random.choice(semester)
-                                if course not in self.ACTIVE_COURSES and currentSemester == semester[course].PTRM:
-                                    self.ACTIVE_COURSES.append(course)
-
-            # For Previous Years
-            else:
-                for semester in programmes[self.PROG_CODE].mandCourses[self.YOS_CODE]:
-                    if semester is not []:
-                        for course in semester:
-                            self.COMPLETED_COURSES.append((course, self.genMark()))
+    # def __genCoursesOLD(self):
+    #     # TODO: Account for courses that earn 7.5 Credits
+    #     for i in range(self.YOS_CODE + 1):
+    #
+    #         # For Current Year
+    #         if i == self.YOS_CODE:
+    #             # Add Mandatory Courses
+    #             for semester in programmes[self.PROG_CODE].mandCourses[self.YOS_CODE]:
+    #                 if semester:
+    #                     for course in semester:
+    #                         self.ACTIVE_COURSES.append(course)
+    #
+    #             # Add Optional Courses
+    #             for semester in programmes[self.PROG_CODE].optCourses[self.YOS_CODE]:
+    #                 if semester:
+    #                     # Semester 1
+    #                     if programmes[self.PROG_CODE].optCount[self.YOS_CODE][0] != 0:
+    #                         for j in range(programmes[self.PROG_CODE].optCount[self.YOS_CODE][0]):
+    #                             course = random.choice(semester)
+    #                             if course not in self.ACTIVE_COURSES and currentSemester == course.PTRM:
+    #                                 self.ACTIVE_COURSES.append(course)
+    #                     # Some tables don't explicitly say how many optional courses you can take
+    #                     else:
+    #                         while len(self.ACTIVE_COURSES) < 4:
+    #                             course = random.choice(semester)
+    #                             if course not in self.ACTIVE_COURSES and currentSemester == semester[course].PTRM:
+    #                                 self.ACTIVE_COURSES.append(course)
+    #                     # Semester 2
+    #                     if programmes[self.PROG_CODE].optCount[self.YOS_CODE][1] != 0:
+    #                         for j in range(programmes[self.PROG_CODE].optCount[self.YOS_CODE][1]):
+    #                             course = random.choice(semester)
+    #                             if course not in self.ACTIVE_COURSES and currentSemester == semester[course].PTRM:
+    #                                 self.ACTIVE_COURSES.append(course)
+    #
+    #         # For Previous Years
+    #         else:
+    #             for semester in programmes[self.PROG_CODE].mandCourses[self.YOS_CODE]:
+    #                 if semester is not []:
+    #                     for course in semester:
+    #                         self.COMPLETED_COURSES.append((course, self.genMark()))
 
     def __genCourses(self):
-        for year in programmes[s.PROG_CODE].mandCourses:
-            break
-        self.__addMandatoryCourses()
-        self.__addOptionalCourse()
+        # Loop through each year and semester, adding all mandatory courses from the students programme.
+        for year in programmes[self.PROG_CODE].mandCourses:
+            for i in range(len(programmes[self.PROG_CODE].mandCourses[year])):
+                if programmes[self.PROG_CODE].mandCourses[year][i]:
+                    self.__addMandatoryCourses(year, i)
 
-    def __addMandatoryCourses(self, year, semester):
-        for course in programmes[self.PROG_CODE].mandCourses[year][semester]:
+        # Loop through each year and semester, adding optional courses until the sum of a semesters course is 60 credits
+        for year in programmes[self.PROG_CODE].optCourses:
+            for i in range(len(programmes[self.PROG_CODE].optCourses[year])):
+                if programmes[self.PROG_CODE].optCourses[year][i]:
+                    self.__addOptionalCourse(year, i)
+
+    # Adds all mandatory courses from the specified year and semester to active and completed course list.
+    def __addMandatoryCourses(self, year, semesterIndex):
+        for course in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
             if self.YOS_CODE < year:
-                self.COMPLETED_COURSES.append((course, self.generateMark()))
+                self.COMPLETED_COURSES.append((course, self.__generateMark()))
             elif self.YOS_CODE == year:
-                if semester == currentSemester:
+                if semesterIndex == currentSemester-1:
                     self.ACTIVE_COURSES.append(course)
-                elif semester < currentSemester:
-                    self.COMPLETED_COURSES.append((course, self.generateMark()))
+                elif semesterIndex < currentSemester-1:
+                    self.COMPLETED_COURSES.append((course, self.__generateMark()))
 
-    # TODO: Break loop: Either when len(active/completed courses per semester) == 4 OR when optCount reached.
-    # TODO: SUM of course credits > 60
-    def __addOptionalCourse(self, year, semester):
-        course = random.choice(programmes[self.PROG_CODE].optCourses[year][semester])
-        if course not in self.COMPLETED_COURSES and course not in self.ACTIVE_COURSES:
-            if self.YOS_CODE < year:
-                self.COMPLETED_COURSES.append((course, self.generateMark()))
-            elif self.YOS_CODE == year:
-                if semester == currentSemester:
-                    self.ACTIVE_COURSES.append(course)
-                elif semester < currentSemester:
-                    self.COMPLETED_COURSES.append((course, self.generateMark()))
-        else:
-            self.__addOptionalCourses(year, semester)
 
-    def __genMark(self):
+    def __addOptionalCourse(self, year, semesterIndex):
+        # TODO: Check the number of credits per year and per semester add up to 60 before adding more
+        # Sum credits for completed courses in this year and semester
+        semesterCredits = 0
+        for c in self.COMPLETED_COURSES:
+            if courses[c[0]].PTRM == semesterIndex + 1:
+                if c[0] in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
+                        or c[0] in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
+                    semesterCredits += courses[c[0]].CREDIT_HOURS
+
+        # Pick an optional course at random, as long as it isn't already in the students course list
+        course = random.choice(programmes[self.PROG_CODE].optCourses[year][semesterIndex])
+        while course in self.COMPLETED_COURSES or course in self.ACTIVE_COURSES:
+            course = random.choice(programmes[self.PROG_CODE].optCourses[year][semesterIndex])
+
+        # Add optional courses for each year up until active year, then add to active course list.
+        if self.YOS_CODE < year:
+            self.COMPLETED_COURSES.append((course, self.__generateMark()))
+        elif self.YOS_CODE == year:
+            if semesterIndex == currentSemester-1:
+                self.ACTIVE_COURSES.append(course)
+            elif semesterIndex < currentSemester-1:
+                self.COMPLETED_COURSES.append((course, self.__generateMark()))
+
+    def __generateMark(self):
         return random.randrange(45, 90)
 
 
-# region "Gen" Functions
 def genHWUid():
     hwid = "H00" + str(random.randrange(100000, 400000))
     if hwid not in uniqueHWIDs:
@@ -246,10 +275,8 @@ def genUsername(userInitials):
         return username
     else:
         genUsername(userInitials)
-# endregion
 
 
-# region "File" Functions
 def writeCSV(header, data):
     with open("output.csv", "w", newline='') as f:
         writer = csv.writer(f)
@@ -318,7 +345,6 @@ def readProgrammes(fileName: string):
                         print(row)
 
     os.chdir(curDir)
-# endregion
 
 
 # TODO: TO BE REPLACED BY WEB SCRAPER WITH PROPER SEMESTER CLASSIFICATION
@@ -349,16 +375,16 @@ if __name__ == '__main__':
     readProgrammes("ProgrammeData.xlsx")
 
     faker = Faker(["en_GB"])
-    for i in range(studentCount):
+    for j in range(studentCount):
         s = Student(faker)
         students.append(s)
 
-    ''' Print course List 
-    for e in [*courses.values()]:
-        for attribute in (e.__dict__.keys()):
-            print(str(attribute) + ":" + str(getattr(e, attribute)), end=" ¦ ")
-        print('')
-    '''
+    # Print course List
+    # for e in [*courses.values()]:
+    #     for attribute in (e.__dict__.keys()):
+    #         print(str(attribute) + ": " + str(getattr(e, attribute)), end=" ¦ ")
+    #     print('')
+
 
     ''' Print programme List 
     for prog in [*programmes.values()]:
@@ -371,16 +397,16 @@ if __name__ == '__main__':
         print("\n ############### \n")
     '''
 
-    ''' Print student list '''
-    for s in students:
-        # for attribute in (s.__dict__.keys()):
-        #    print(str(attribute) + ":" + str(getattr(s, attribute)), end=" ¦\t")
-
-
-        print(s.BANNER_ID + "(" + s.PROG_CODE + "): " + str(s.ACTIVE_COURSES) + " ¦¦¦ " +  str(s.COMPLETED_COURSES))
-        print(programmes[s.PROG_CODE].mandCourses)
-        print(programmes[s.PROG_CODE].optCourses)
-        print(programmes[s.PROG_CODE].optCount)
-        print('')
+    # Print student list
+    # for s in students:
+    #     # for attribute in (s.__dict__.keys()):
+    #     #    print(str(attribute) + ":" + str(getattr(s, attribute)), end=" ¦\t")
+    #
+    #     print(s.BANNER_ID + " (" + s.PROG_CODE + " Y" + str(s.YOS_CODE) + "): \nActiveCourses:" + str(s.ACTIVE_COURSES)
+    #           + "\nCompleted Courses:" + str(s.COMPLETED_COURSES))
+    #     print("¦¦ Programme Mandatory y" + str(s.YOS_CODE) + ": " + str(programmes[s.PROG_CODE].mandCourses[s.YOS_CODE]))
+    #     print("¦¦ Programme Optional y" + str(s.YOS_CODE) + ": " + str(programmes[s.PROG_CODE].optCourses[s.YOS_CODE]))
+    #     # print(programmes[s.PROG_CODE].optCount)
+    #     print('')
 
     # writeCSV(headers, students)
