@@ -165,47 +165,6 @@ class Student:
         else:
             self.TERM_CODE = random.choice(["202021", "201920", "201819", "201718", "201617", "201516"])
 
-    # def __genCoursesOLD(self):
-    #     # TODO: Account for courses that earn 7.5 Credits
-    #     for i in range(self.YOS_CODE + 1):
-    #
-    #         # For Current Year
-    #         if i == self.YOS_CODE:
-    #             # Add Mandatory Courses
-    #             for semester in programmes[self.PROG_CODE].mandCourses[self.YOS_CODE]:
-    #                 if semester:
-    #                     for course in semester:
-    #                         self.ACTIVE_COURSES.append(course)
-    #
-    #             # Add Optional Courses
-    #             for semester in programmes[self.PROG_CODE].optCourses[self.YOS_CODE]:
-    #                 if semester:
-    #                     # Semester 1
-    #                     if programmes[self.PROG_CODE].optCount[self.YOS_CODE][0] != 0:
-    #                         for j in range(programmes[self.PROG_CODE].optCount[self.YOS_CODE][0]):
-    #                             course = random.choice(semester)
-    #                             if course not in self.ACTIVE_COURSES and currentSemester == course.PTRM:
-    #                                 self.ACTIVE_COURSES.append(course)
-    #                     # Some tables don't explicitly say how many optional courses you can take
-    #                     else:
-    #                         while len(self.ACTIVE_COURSES) < 4:
-    #                             course = random.choice(semester)
-    #                             if course not in self.ACTIVE_COURSES and currentSemester == semester[course].PTRM:
-    #                                 self.ACTIVE_COURSES.append(course)
-    #                     # Semester 2
-    #                     if programmes[self.PROG_CODE].optCount[self.YOS_CODE][1] != 0:
-    #                         for j in range(programmes[self.PROG_CODE].optCount[self.YOS_CODE][1]):
-    #                             course = random.choice(semester)
-    #                             if course not in self.ACTIVE_COURSES and currentSemester == semester[course].PTRM:
-    #                                 self.ACTIVE_COURSES.append(course)
-    #
-    #         # For Previous Years
-    #         else:
-    #             for semester in programmes[self.PROG_CODE].mandCourses[self.YOS_CODE]:
-    #                 if semester is not []:
-    #                     for course in semester:
-    #                         self.COMPLETED_COURSES.append((course, self.genMark()))
-
     def __genCourses(self):
         # Loop through each year and semester, adding all mandatory courses from the students programme.
         for year in programmes[self.PROG_CODE].mandCourses:
