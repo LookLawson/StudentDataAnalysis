@@ -155,7 +155,7 @@ class Student:
             self.YOS_CODE = random.randrange(1, 5)
             self.LEVL_CODE = "UG"
 
-        # TODO: Account for inactive and non-Edinburgh campus students
+        # TODO: Account for inactive and non-Edinburgh campus student
         self.CAMP_CODE = "1ED"
         self.CAMP_DESC = "Edinburgh"
         self.ACTIVE_STATUS = "AS"
