@@ -61,6 +61,7 @@ class Programme:
             else:
                 self.optCount[year][semester] = 0
         except Exception as e:
+            print("(Programme__inti) Something is wrong with: ", end='')
             print(e)
             print(row)
 
@@ -74,8 +75,9 @@ class Programme:
                 self.optCourses[year][semester].append(row[1])
 
         except Exception as e:
-            print(row)
+            print("(Programme_addCourse) Something is wrong with: ", end='')
             print(e)
+            print(row)
 
 
 class Course:
@@ -90,14 +92,14 @@ class Course:
                 self.PTRM = int(row[4][0])
             # TODO: Future format of CSV may have credits in its own column. For now its within the description
             creds = re.match(r'^.*?\([^\d]*(\d+\.*\d+)[^\d]*\).*$', row[2])
-            if creds and float(creds.group(1)) < 20:
+            if creds and float(creds.group(1)) < 99:
+                self.CREDIT_HOURS = float(creds.group(1))
+            elif creds and float(creds.group(2)) < 99:
                 self.CREDIT_HOURS = float(creds.group(1))
             else:
                 self.CREDIT_HOURS = 15.0
-
         except Exception as e:
-            print(e)
-            print("/nSomething is wrong with line: /n" + row)
+            print("(Course__init) Something is wrong in line: /n" + row)
 
 
 class Student:
@@ -137,22 +139,21 @@ class Student:
         self.PROG_CODE = random.choice(list(programmes.keys()))
         self.PROG_DESC = programmes[self.PROG_CODE].PROG_DESC
 
+        # Discount picking years on a course where there are no courses
+        validYears = []
+        for year in programmes[self.PROG_CODE].mandCourses:
+            if any(programmes[self.PROG_CODE].mandCourses[year]):
+                validYears.append(year)
+        self.YOS_CODE = random.randrange(0, max(validYears)) + 1
+
         if "MSc" in self.PROG_DESC or "PhD" in self.PROG_DESC:
             # TODO: You're still an UG until year 5 even if you're own a MSc course though right?
-
             # Check to see which years in a programme actually contain courses
-            validYears = []
-            for year in programmes[self.PROG_CODE].mandCourses:
-                if any(programmes[self.PROG_CODE].mandCourses[year]):
-                    validYears.append(year)
-            self.YOS_CODE = random.randrange(0, max(validYears))+1
-
             if self.YOS_CODE != 5:
                 self.LEVL_CODE = "UG"
             else:
                 self.LEVL_CODE = "PG"
         else:
-            self.YOS_CODE = random.randrange(1, 5)
             self.LEVL_CODE = "UG"
 
         # TODO: Account for inactive and non-Edinburgh campus student
@@ -189,33 +190,80 @@ class Student:
                 elif semesterIndex < currentSemester-1:
                     self.COMPLETED_COURSES.append((course, self.__generateMark()))
 
-
     def __addOptionalCourse(self, year, semesterIndex):
         # TODO: Check the number of credits per year and per semester add up to 60 before adding more
-        # Sum credits for completed courses in this year and semester
+
+        # Troubleshooting print statements
+        print(self.BANNER_ID + " - " + self.PROG_CODE + " Y" + str(self.YOS_CODE))
+        print("Adding optional courses for y" + str(year) + " s" + str(semesterIndex+1) + "...")
+        print("¦¦ Programme Mandatory y" + str(year) + ": " + str(programmes[self.PROG_CODE].mandCourses[year]))
+        print("¦¦ Programme Optional y" + str(year) + ": " + str(programmes[self.PROG_CODE].optCourses[year]))
+        print("Completed Courses this semester: " + str(self.getStudentCourses(year, semesterIndex)))
+
+        # Sum credits for already added mandatory courses in this year and semester
         semesterCredits = 0
+        if self.YOS_CODE == year and currentSemester == semesterIndex+1:
+            for c in self.ACTIVE_COURSES:
+                if courses[c].PTRM == semesterIndex + 1:
+                    if c in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
+                            or c in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
+                        semesterCredits += courses[c].CREDIT_HOURS
+                        print("(Active) Added " + str(courses[c].CREDIT_HOURS) + " credits from " +
+                              courses[c].COURSE_CODE + "(total: " + str(semesterCredits) + ")")
+        else:
+            for c in self.COMPLETED_COURSES:
+                if courses[c[0]].PTRM == semesterIndex + 1:
+                    if c[0] in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
+                            or c[0] in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
+                        semesterCredits += courses[c[0]].CREDIT_HOURS
+                        print("(Completed) Added " + str(courses[c[0]].CREDIT_HOURS) + " credits from " +
+                              courses[c[0]].COURSE_CODE + "(total: " + str(semesterCredits) + ")")
+
+        print("Mandatory Course Credits: " + str(semesterCredits))
+
+        while semesterCredits < 60:
+            # Pick an optional course at random, as long as it isn't already in the students course list
+            course = random.choice(programmes[self.PROG_CODE].optCourses[year][semesterIndex])
+            while course in self.COMPLETED_COURSES or course in self.ACTIVE_COURSES:
+                course = random.choice(programmes[self.PROG_CODE].optCourses[year][semesterIndex])
+
+            # Add optional courses for each year up until active year, then add to active course list.
+            if self.YOS_CODE < year:
+                self.COMPLETED_COURSES.append((course, self.__generateMark()))
+                semesterCredits += courses[course].CREDIT_HOURS
+                print("Optional Course Added:" + course + "(" + str(
+                    courses[course].CREDIT_HOURS) + ") Total Credits this semester: " + str(semesterCredits))
+            elif self.YOS_CODE == year:
+                if semesterIndex == currentSemester-1:
+                    self.ACTIVE_COURSES.append(course)
+                    semesterCredits += courses[course].CREDIT_HOURS
+                    print("Optional Course Added:" + course + "(" + str(
+                        courses[course].CREDIT_HOURS) + ") Total Credits this semester: " + str(semesterCredits))
+                elif semesterIndex < currentSemester-1:
+                    self.COMPLETED_COURSES.append((course, self.__generateMark()))
+                    semesterCredits += courses[course].CREDIT_HOURS
+                    print("Optional Course Added:" + course + "(" + str(
+                        courses[course].CREDIT_HOURS) + ") Total Credits this semester: " + str(semesterCredits))
+            # print("running credit total: " + str(semesterCredits))
+
+        print('')
+
+    def __generateMark(self):
+        return random.randrange(45, 90)
+
+    def getStudentCourses(self, year, semesterIndex):
+        l = []
         for c in self.COMPLETED_COURSES:
             if courses[c[0]].PTRM == semesterIndex + 1:
                 if c[0] in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
                         or c[0] in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
-                    semesterCredits += courses[c[0]].CREDIT_HOURS
-
-        # Pick an optional course at random, as long as it isn't already in the students course list
-        course = random.choice(programmes[self.PROG_CODE].optCourses[year][semesterIndex])
-        while course in self.COMPLETED_COURSES or course in self.ACTIVE_COURSES:
-            course = random.choice(programmes[self.PROG_CODE].optCourses[year][semesterIndex])
-
-        # Add optional courses for each year up until active year, then add to active course list.
-        if self.YOS_CODE < year:
-            self.COMPLETED_COURSES.append((course, self.__generateMark()))
-        elif self.YOS_CODE == year:
-            if semesterIndex == currentSemester-1:
-                self.ACTIVE_COURSES.append(course)
-            elif semesterIndex < currentSemester-1:
-                self.COMPLETED_COURSES.append((course, self.__generateMark()))
-
-    def __generateMark(self):
-        return random.randrange(45, 90)
+                    l.append(c[0])
+        for c in self.ACTIVE_COURSES:
+            if courses[c].PTRM == semesterIndex + 1:
+                if c in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
+                        or c in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
+                    l.append(c)
+        return l
 
 
 def genHWUid():
@@ -300,8 +348,19 @@ def readProgrammes(fileName: string):
                                 if row[6] != '':
                                     programmes[progCode].optCount[year][semester] = int(float(row[6].strip()))
                     except Exception as e:
+                        print("(CSV Reader) Something is wrong with: ", end='')
                         print(e)
                         print(row)
+
+    # TODO: Stop removing Phds and Msc from the dictionary if scope widens to accommodate PG
+    bannedKeywords = ["phd", "mdes", "msc", "BSc Software Development for Business", "diploma", "dubai", "malaysia"]
+    bannedProgrammes = []
+    for p in programmes:
+        for keyword in bannedKeywords:
+            if keyword in p.lower():
+                bannedProgrammes.append(p)
+    for p in bannedProgrammes:
+        programmes.pop(p)
 
     os.chdir(curDir)
 
@@ -330,13 +389,13 @@ if __name__ == '__main__':
     students = []
     headers = readHeaders(sys.argv[1])
 
-    readCourseList("programmes")
+    # readCourseList("programmes")
     readProgrammes("ProgrammeData.xlsx")
 
     faker = Faker(["en_GB"])
-    for j in range(studentCount):
-        s = Student(faker)
-        students.append(s)
+    # for j in range(studentCount):
+    #     s = Student(faker)
+    #     students.append(s)
 
     # Print course List
     # for e in [*courses.values()]:
@@ -345,16 +404,17 @@ if __name__ == '__main__':
     #     print('')
 
 
-    ''' Print programme List 
+    # Print programme List
     for prog in [*programmes.values()]:
         print(prog.PROG_CODE)
         for year in prog.mandCourses:
-            print("\nYear " + str(year))
-            print(prog.mandCourses[year])
-            print(prog.optCourses[year])
-            print(prog.optCount[year])
+            if any(prog.mandCourses[year]) or any(prog.optCourses[year]):
+                print("\nYear " + str(year))
+                print(prog.mandCourses[year])
+                print(prog.optCourses[year])
+                print(prog.optCount[year])
         print("\n ############### \n")
-    '''
+
 
     # Print student list
     # for s in students:
