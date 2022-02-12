@@ -12,7 +12,7 @@ from pathlib import Path
 from collections import OrderedDict
 
 # region Variables
-studentCount = 100
+studentCount = 400
 currentAcademicYear = 202122
 currentSemester = 2
 courses = {}
@@ -42,24 +42,11 @@ class Programme:
             4: [[], [], []],
             5: [[], [], []]
         }
-        self.optCount = {
-            1: [0, 0, 0],
-            2: [0, 0, 0],
-            3: [0, 0, 0],
-            4: [0, 0, 0],
-            5: [0, 0, 0]
-        }
         try:
             self.PROG_DESC = row[8].strip()
             # TODO: Make CSV include course code, then use this properly
             self.PROG_CODE = self.PROG_DESC
             self.addCourse(row)
-            year = int(row[5][0])
-            semester = int(row[4][0]) - 1
-            if row[6] != "":
-                self.optCount[year][semester] = int(row[6][0])
-            else:
-                self.optCount[year][semester] = 0
         except Exception as e:
             print("(Programme__inti) Something is wrong with: ", end='')
             print(e)
@@ -94,8 +81,6 @@ class Course:
             creds = re.match(r'^.*?\([^\d]*(\d+\.*\d+)[^\d]*\).*$', row[2])
             if creds and float(creds.group(1)) < 99:
                 self.CREDIT_HOURS = float(creds.group(1))
-            elif creds and float(creds.group(2)) < 99:
-                self.CREDIT_HOURS = float(creds.group(1))
             else:
                 self.CREDIT_HOURS = 15.0
         except Exception as e:
@@ -108,8 +93,16 @@ class Student:
         self.ESTS_CODE = "EN"  # Language?
         self.ACTIVE_COURSES = []
         self.COMPLETED_COURSES = []
+
         self.__genPersonalInfo(f)
         self.__genCourseInfo()
+        print("\nCreating new year " + str(self.YOS_CODE) + self.PROG_CODE + " student...")
+        # print(self.PROG_DESC + " mandatory courses: ")
+        # for m in [*programmes[self.PROG_CODE].mandCourses.values()]:
+        #     print(m)
+        # print(self.PROG_DESC + " optional courses: ")
+        # for o in [*programmes[self.PROG_CODE].optCourses.values()]:
+        #     print(o)
         self.__genCourses()
 
     def __genPersonalInfo(self, f):
@@ -170,19 +163,20 @@ class Student:
         # Loop through each year and semester, adding all mandatory courses from the students programme.
         for year in programmes[self.PROG_CODE].mandCourses:
             for i in range(len(programmes[self.PROG_CODE].mandCourses[year])):
-                if programmes[self.PROG_CODE].mandCourses[year][i]:
+                if programmes[self.PROG_CODE].mandCourses[year][i] and self.YOS_CODE >= year:
                     self.__addMandatoryCourses(year, i)
+        print(" ¦¦¦ Completed Mandatory Courses: " + str([*self.COMPLETED_COURSES]))
 
         # Loop through each year and semester, adding optional courses until the sum of a semesters course is 60 credits
         for year in programmes[self.PROG_CODE].optCourses:
             for i in range(len(programmes[self.PROG_CODE].optCourses[year])):
-                if programmes[self.PROG_CODE].optCourses[year][i]:
+                if programmes[self.PROG_CODE].optCourses[year][i] and self.YOS_CODE >= year:
                     self.__addOptionalCourse(year, i)
 
     # Adds all mandatory courses from the specified year and semester to active and completed course list.
     def __addMandatoryCourses(self, year, semesterIndex):
         for course in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
-            if self.YOS_CODE < year:
+            if self.YOS_CODE > year:
                 self.COMPLETED_COURSES.append((course, self.__generateMark()))
             elif self.YOS_CODE == year:
                 if semesterIndex == currentSemester-1:
@@ -198,7 +192,7 @@ class Student:
         print("Adding optional courses for y" + str(year) + " s" + str(semesterIndex+1) + "...")
         print("¦¦ Programme Mandatory y" + str(year) + ": " + str(programmes[self.PROG_CODE].mandCourses[year]))
         print("¦¦ Programme Optional y" + str(year) + ": " + str(programmes[self.PROG_CODE].optCourses[year]))
-        print("Completed Courses this semester: " + str(self.getStudentCourses(year, semesterIndex)))
+        print("¦¦ Courses this semester: " + str(self.getStudentCourses(year, semesterIndex)), end='')
 
         # Sum credits for already added mandatory courses in this year and semester
         semesterCredits = 0
@@ -208,18 +202,13 @@ class Student:
                     if c in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
                             or c in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
                         semesterCredits += courses[c].CREDIT_HOURS
-                        print("(Active) Added " + str(courses[c].CREDIT_HOURS) + " credits from " +
-                              courses[c].COURSE_CODE + "(total: " + str(semesterCredits) + ")")
         else:
             for c in self.COMPLETED_COURSES:
                 if courses[c[0]].PTRM == semesterIndex + 1:
                     if c[0] in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
                             or c[0] in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
                         semesterCredits += courses[c[0]].CREDIT_HOURS
-                        print("(Completed) Added " + str(courses[c[0]].CREDIT_HOURS) + " credits from " +
-                              courses[c[0]].COURSE_CODE + "(total: " + str(semesterCredits) + ")")
-
-        print("Mandatory Course Credits: " + str(semesterCredits))
+        print(" ¦ Mandatory Course Credits: " + str(semesterCredits))
 
         while semesterCredits < 60:
             # Pick an optional course at random, as long as it isn't already in the students course list
@@ -228,7 +217,7 @@ class Student:
                 course = random.choice(programmes[self.PROG_CODE].optCourses[year][semesterIndex])
 
             # Add optional courses for each year up until active year, then add to active course list.
-            if self.YOS_CODE < year:
+            if self.YOS_CODE > year:
                 self.COMPLETED_COURSES.append((course, self.__generateMark()))
                 semesterCredits += courses[course].CREDIT_HOURS
                 print("Optional Course Added:" + course + "(" + str(
@@ -325,8 +314,6 @@ def readProgrammes(fileName: string):
                         if row[0] != "":
                             # Add courses to a dictionary of CourseCode: CourseObject
                             courseCode = row[1]
-                            semester = int(row[4].strip()) - 1
-                            year = int(row[5].strip())
                             progCode = row[8]
                             # TODO: Account for bullshitery with random-ass formatting on the macs site,
                             #  might not be relevant for the Uni-wide site
@@ -340,20 +327,17 @@ def readProgrammes(fileName: string):
                             # TODO: Optional Count
                             if progCode not in programmes:
                                 p = Programme(row)
-                                if row[6] != '':  # Don't judge, int() can't cast from a float String, but float() can
-                                    p.optCount[year][semester] = int(float(row[6].strip()))
                                 programmes[progCode] = p
                             else:
                                 programmes[progCode].addCourse(row)
-                                if row[6] != '':
-                                    programmes[progCode].optCount[year][semester] = int(float(row[6].strip()))
                     except Exception as e:
                         print("(CSV Reader) Something is wrong with: ", end='')
                         print(e)
                         print(row)
 
     # TODO: Stop removing Phds and Msc from the dictionary if scope widens to accommodate PG
-    bannedKeywords = ["phd", "mdes", "msc", "BSc Software Development for Business", "diploma", "dubai", "malaysia"]
+    bannedKeywords = ["phd", "mdes", "msc", "BSc Software Development for Business", "diploma", "dubai", "malaysia",
+                      "ocean"]
     bannedProgrammes = []
     for p in programmes:
         for keyword in bannedKeywords:
@@ -392,40 +376,43 @@ if __name__ == '__main__':
     # readCourseList("programmes")
     readProgrammes("ProgrammeData.xlsx")
 
-    faker = Faker(["en_GB"])
-    # for j in range(studentCount):
-    #     s = Student(faker)
-    #     students.append(s)
-
-    # Print course List
+    # # Print course List
     # for e in [*courses.values()]:
     #     for attribute in (e.__dict__.keys()):
     #         print(str(attribute) + ": " + str(getattr(e, attribute)), end=" ¦ ")
     #     print('')
 
+    faker = Faker(["en_GB"])
+    for j in range(studentCount):
+        s = Student(faker)
+        students.append(s)
 
-    # Print programme List
-    for prog in [*programmes.values()]:
-        print(prog.PROG_CODE)
-        for year in prog.mandCourses:
-            if any(prog.mandCourses[year]) or any(prog.optCourses[year]):
-                print("\nYear " + str(year))
-                print(prog.mandCourses[year])
-                print(prog.optCourses[year])
-                print(prog.optCount[year])
-        print("\n ############### \n")
+    # region Test Print Output
 
+    # # Print programme List
+    # for prog in [*programmes.values()]:
+    #     print(prog.PROG_CODE)
+    #     for yearKey in prog.mandCourses:
+    #         if any(prog.mandCourses[yearKey]) or any(prog.optCourses[yearKey]):
+    #             print("\nYear " + str(yearKey))
+    #             print(prog.mandCourses[yearKey])
+    #             print(prog.optCourses[yearKey])
+    #     print("\n ############### \n")
 
     # Print student list
-    # for s in students:
-    #     # for attribute in (s.__dict__.keys()):
-    #     #    print(str(attribute) + ":" + str(getattr(s, attribute)), end=" ¦\t")
-    #
-    #     print(s.BANNER_ID + " (" + s.PROG_CODE + " Y" + str(s.YOS_CODE) + "): \nActiveCourses:" + str(s.ACTIVE_COURSES)
-    #           + "\nCompleted Courses:" + str(s.COMPLETED_COURSES))
-    #     print("¦¦ Programme Mandatory y" + str(s.YOS_CODE) + ": " + str(programmes[s.PROG_CODE].mandCourses[s.YOS_CODE]))
-    #     print("¦¦ Programme Optional y" + str(s.YOS_CODE) + ": " + str(programmes[s.PROG_CODE].optCourses[s.YOS_CODE]))
-    #     # print(programmes[s.PROG_CODE].optCount)
-    #     print('')
+    for s in students:
+        if (len(s.COMPLETED_COURSES) % 4) != 0:
+            for attribute in (s.__dict__.keys()):
+               print(str(attribute) + ":" + str(getattr(s, attribute)), end=" ¦\t")
+            print('')
+            print(s.BANNER_ID + " (" + s.PROG_CODE + " Y" + str(s.YOS_CODE) + "): \nActiveCourses:"
+                  + str(s.ACTIVE_COURSES) + "\nCompleted Courses (" + str(len(s.COMPLETED_COURSES)) + ") :" + str(s.COMPLETED_COURSES))
+            # print("¦¦ Programme Mandatory y" + str(s.YOS_CODE) + ": " +
+            #       str(programmes[s.PROG_CODE].mandCourses[s.YOS_CODE]))
+            # print("¦¦ Programme Optional y" + str(s.YOS_CODE) + ": " +
+            #       str(programmes[s.PROG_CODE].optCourses[s.YOS_CODE]))
+            print('')
+
+    # endregion
 
     # writeCSV(headers, students)
