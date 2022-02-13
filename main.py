@@ -72,7 +72,7 @@ class Course:
     def __init__(self, row):
         try:
             self.COURSE_CODE = row[1].strip()
-            self.COURSE_TITLE = re.sub("\(.*\)", "", row[2]).strip()
+            self.COURSE_TITLE = re.sub(r"\(.*\)", "", row[2]).strip()
             if isinstance(row[4], int):
                 self.PTRM = row[4]
             else:
@@ -237,6 +237,7 @@ class Student:
 
         print('')
 
+    # TODO: Generate a mark a bit more ... realistically
     def __generateMark(self):
         return random.randrange(45, 90)
 
@@ -284,6 +285,25 @@ def writeCSV(header, data):
             writer.writerow(line)
 
 
+def writeCSV2(header, studentList):
+    with open("output.csv", "w", newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for student in studentList:
+            for course in student.ACTIVE_COURSES:
+                # write actives row
+                line = []
+                courseHeaders = ["course", "ptrm", "perc", "grade", "credit_hours"]
+                # TODO: Getattr is always returning n/a , figure out why
+                for column in header:
+                    # If the header's data is stored in the student object, fetch it from the student object
+                    if bool([x for x in courseHeaders if (x in column.lower())]):
+                        line.append(str(getattr(student, column, " n/a ")))
+                    else:  # If not, fetch it from the course object
+                        line.append(str(getattr(courses[course], column, " n/a ")))
+                writer.writerow(line)
+
+
 def readHeaders(filename: string):
     header = []
     with open(filename, "r") as file:
@@ -315,16 +335,12 @@ def readProgrammes(fileName: string):
                             # Add courses to a dictionary of CourseCode: CourseObject
                             courseCode = row[1]
                             progCode = row[8]
-                            # TODO: Account for bullshitery with random-ass formatting on the macs site,
-                            #  might not be relevant for the Uni-wide site
                             if courseCode not in courses and re.match(r'[A-Z]+[0-9]{2}[A-Z]{2}', courseCode):
                                 courses[courseCode] = Course(row)
                             elif courseCode == "1 SCQ":
-                                # TODO: Add SCQ course to Programme Objects
                                 break
 
                             # Add Programmes to a dictionary of ProgCode: ProgrammeObject
-                            # TODO: Optional Count
                             if progCode not in programmes:
                                 p = Programme(row)
                                 programmes[progCode] = p
@@ -396,4 +412,5 @@ if __name__ == '__main__':
 
     # endregion
 
-    # writeCSV(headers, students)
+    writeCSV(headers, students)
+    # writeCSV2(headers, students)

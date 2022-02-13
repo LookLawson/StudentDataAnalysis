@@ -1,11 +1,401 @@
 BANNER_ID,TITLE,LAST_NAME,FIRST_NAME,MIDDLE_NAME,ACTIVE_STATUS,PROG_CODE,PROG_DESC,LEVL_CODE,CAMP_CODE,CAMP_DESC,TERM_CODE,YOS_CODE,USERNAME
-H00245201,Mr,Davies,Brandon,,AS,BSc Mathematics with Finance,,UG,1ED,Edinburgh,202122,4,bd94
-H00166833,Mr,Singh,Neil,Adam,AS,BSc Actuarial Science,,UG,1ED,Edinburgh,202122,4,nas53
-H00192263,Ms,Wood,Rachel,,AS,BSc Actuarial Science and Diploma in Industrial Training 1,,UG,1ED,Edinburgh,202122,4,rw8
-H00121521,Mr,Jones,Glenn,,AS,BSc Mathematics with Physics,,UG,1ED,Edinburgh,202122,4,gj14
-H00104659,Mr,Baker,Connor,,AS,BSc Actuarial Science and Diploma in Industrial Training 1,,UG,1ED,Edinburgh,202122,4,cb59
-H00266812,Mr,Jenkins,Joseph,Terence,AS,BSc Mmath Mathematics,,UG,1ED,Edinburgh,202122,4,jtj42
-H00171574,Mr,Atkinson,Mathew,Antony,AS,MSc Actuarial Science,,UG,1ED,Edinburgh,202122,4,maa15
-H00137374,Ms,Dunn,Frances,Joyce,AS,BSc Financial Mathematics,,UG,1ED,Edinburgh,202122,4,fjd55
-H00247727,Mr,Brady,Alan,Sean,AS,BSc Actuarial Science and Diploma in Industrial Training 2,,UG,1ED,Edinburgh,202122,4,asb4
-H00335414,Ms,Sheppard,Shirley,,AS,BSc Statistical Data Science,,UG,1ED,Edinburgh,202122,4,ss46
+H00163506,Mr,Lees,Ian,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,3,il18
+H00261554,Mr,Smith,Louis,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,ls1
+H00320088,Ms,Brown,Charlotte,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,2,cb16
+H00173180,Mr,Taylor,Nicholas,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,4,nt93
+H00341507,Mr,Robinson,Thomas,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,4,tr87
+H00169032,Ms,Jones,Emily,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,ej54
+H00135788,Mr,Miller,Wayne,Jeremy,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,4,wjm86
+H00233478,Mr,Jenkins,Kieran,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,4,kj74
+H00124310,Mr,Hudson,Martyn,Toby,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,mth49
+H00290672,Mr,Hartley,Ashley,Alexander,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,aah87
+H00196766,Ms,Lawson,Gail,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,4,gl25
+H00153671,Mr,Evans,Hugh,Roy,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,hre58
+H00366815,Mr,Evans,Samuel,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,1,se31
+H00393823,Mr,Elliott,Wayne,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,4,we82
+H00228441,Mrs,Curtis,Pauline,Leah,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,1,plc21
+H00384541,Mr,Jackson,Nigel,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,nj54
+H00155123,Mr,Jones,Jordan,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,jj4
+H00306658,Mr,Brooks,Oliver,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,ob92
+H00101200,Mr,Haynes,Ian,Justin,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,3,ijh37
+H00394827,Ms,Stephenson,Deborah,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,ds21
+H00262475,Mrs,Moore,Laura,Brenda,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,3,lbm57
+H00279056,Mr,Barber,Thomas,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,tb10
+H00233312,Mr,McCarthy,Jeremy,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,3,jm23
+H00209174,Mr,Smith,Raymond,Lawrence,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,3,rls21
+H00258125,Mr,Power,Tony,Gerard,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,4,tgp73
+H00148838,Mr,Carter,Marcus,Cameron,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,2,mcc83
+H00165722,Mr,Roberts,Wayne,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,4,wr46
+H00369118,Mr,Sinclair,Sam,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,ss47
+H00321287,Mr,Fletcher,Marcus,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,3,mf84
+H00170334,Ms,Johnson,Geraldine,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,2,gj47
+H00119561,Mr,Arnold,Stephen,Darren,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,sda43
+H00109959,Mr,Davison,Justin,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,3,jd7
+H00181253,Ms,Ward,Jemma,Abbie,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,2,jaw33
+H00377078,Ms,Morrison,Beth,Elaine,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,bem91
+H00260834,Ms,Lee,Margaret,Rachel,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,3,mrl34
+H00394769,Mr,White,Abdul,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,3,aw6
+H00370477,Ms,Baldwin,Megan,Janice,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,2,mjb12
+H00208461,Mr,Nicholson,Conor,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,cn97
+H00151268,Mr,Jenkins,Wayne,Stuart,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,4,wsj60
+H00128425,Mr,Oliver,Henry,Callum,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,hco82
+H00369341,Ms,Lewis,Linda,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,3,ll52
+H00332008,Mr,Barker,Damien,Leslie,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,3,dlb37
+H00282467,Mr,Patel,Mohammad,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,mp26
+H00138633,Mr,Bell,Matthew,Glenn,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,mgb68
+H00133092,Ms,Chamberlain,Judith,Kirsty,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,4,jkc99
+H00119025,Mr,Cameron,Martyn,Graham,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,4,mgc27
+H00281838,Mr,Murray,Ronald,Lewis,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,1,rlm74
+H00239543,Mr,Spencer,Cameron,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,cs41
+H00339455,Mr,Richardson,Joseph,Stephen,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,3,jsr44
+H00397038,Ms,Allen,Charlotte,Jemma,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,cja40
+H00387387,Mr,Green,Thomas,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,tg94
+H00283463,Mr,Davis,Francis,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,4,fd56
+H00175754,Mr,West,Jake,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,4,jw90
+H00336106,Ms,Stone,Gillian,Jennifer,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,4,gjs82
+H00110940,Mr,Lee,Andrew,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,4,al99
+H00300788,Ms,Foster,Carly,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,4,cf40
+H00174880,Mr,Stevenson,Raymond,Craig,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,4,rcs26
+H00221207,Ms,Elliott,Alison,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,ae17
+H00174520,Mrs,Jordan,Rachael,Danielle,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,5,rdj1
+H00372801,Mr,Watson,Shaun,Bryan,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,sbw1
+H00310802,Ms,Dixon,Margaret,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,md9
+H00118695,Mr,Holmes,Garry,Reece,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,2,grh79
+H00313458,Ms,Morgan,Claire,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,cm2
+H00219126,Mr,Smith,Timothy,Graham,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,tgs28
+H00375949,Ms,Fisher,Gail,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,3,gf21
+H00124634,Mr,Parry,Patrick,Oliver,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,1,pop4
+H00258947,Mr,Morton,Kevin,Charles,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,2,kcm82
+H00309402,Mr,Turner,Gavin,Guy,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,2,ggt66
+H00287393,Mrs,Pollard,Sian,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,sp22
+H00117104,Ms,Short,Barbara,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,bs12
+H00327964,Mr,Clark,Stephen,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,3,sc45
+H00255708,Mr,Evans,Trevor,Roy,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,tre91
+H00203542,Ms,Martin,Katie,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,2,km38
+H00359487,Mr,Hunter,Connor,Liam,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,1,clh95
+H00366373,Ms,Craig,Kathryn,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,kc89
+H00184232,Ms,Thompson,Eleanor,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,4,et90
+H00260133,Ms,Townsend,Naomi,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,2,nt12
+H00138657,Mr,Crawford,Gareth,Colin,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,3,gcc54
+H00221723,Mr,Todd,George,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,2,gt32
+H00258385,Ms,Burton,Carolyn,Sheila,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,2,csb68
+H00338419,Mr,Baker,Wayne,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,2,wb13
+H00351374,Mr,Parker,Vincent,Connor,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,5,vcp73
+H00180540,Ms,Adams,Megan,Diana,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,mda25
+H00374329,Mr,Ellis,Eric,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,ee54
+H00367372,Mr,Dean,Matthew,Graeme,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,3,mgd40
+H00198538,Ms,Lewis,Lesley,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,2,ll67
+H00157553,Mr,Robinson,Elliot,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,er96
+H00309110,Ms,Singh,Kayleigh,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,1,ks79
+H00323099,Mr,Hooper,Sam,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,2,sh11
+H00244236,Mr,Pearson,Lewis,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,4,lp51
+H00102686,Mr,James,Dennis,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,1,dj86
+H00231025,Mr,Bailey,Louis,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,2,lb40
+H00260767,Mr,Barber,Bradley,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,bb73
+H00245835,Ms,Davies,Marian,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,md69
+H00267066,Mr,Hunt,Callum,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,4,ch4
+H00359093,Mr,Williams,Darren,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,4,dw53
+H00196591,Ms,Thomas,Paige,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,pt20
+H00247246,Ms,Parker,Jodie,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,4,jp31
+H00398186,Ms,Moore,Carolyn,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,cm34
+H00131079,Mr,Smith,Sam,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,4,ss16
+H00364335,Mr,Morgan,Darren,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,1,dm61
+H00129193,Mr,Rose,Philip,Alan,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,par56
+H00223528,Mr,Law,Geoffrey,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,gl76
+H00263612,Mr,Leach,Philip,Nicholas,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,pnl75
+H00395696,Mr,Buckley,Jake,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,jb42
+H00245546,Ms,Smith,Fiona,Louise,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,fls40
+H00178088,Mr,Scott,Thomas,Mathew,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,3,tms93
+H00231014,Mr,Richards,William,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,4,wr80
+H00217683,Ms,Stevens,Jean,Marilyn,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,jms77
+H00395313,Mr,Chan,Duncan,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,1,dc33
+H00202406,Ms,Howard,Charlotte,Karen,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,2,ckh48
+H00320417,Mr,Watts,Terry,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,1,tw11
+H00179744,Mr,Chan,Glen,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,gc42
+H00377684,Mr,Pugh,Tony,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,tp98
+H00245565,Mr,Sullivan,Trevor,Iain,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,1,tis33
+H00232866,Mr,Johnson,Gary,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,gj16
+H00312326,Ms,Evans,Lorraine,Molly,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,lme28
+H00203742,Mr,Hunt,Eric,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,eh62
+H00284209,Mr,Robinson,Darren,Stanley,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,4,dsr45
+H00124444,Mr,Walker,John,Michael,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,3,jmw24
+H00253225,Mr,Kirk,Mohammad,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,mk95
+H00331589,Ms,Shaw,Donna,Charlene,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,dcs65
+H00131321,Mr,O'Brien,Shane,Vincent,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,svo36
+H00227135,Ms,Howell,Jane,Jennifer,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,2,jjh57
+H00100803,Mr,Saunders,Carl,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,cs56
+H00281221,Mr,Sullivan,Samuel,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,4,ss73
+H00292823,Mr,Davey,Leon,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,ld84
+H00366409,Ms,Jackson,Joanne,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,jj44
+H00365015,Mr,Henry,Leigh,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,1,lh97
+H00182126,Ms,Yates,Josephine,Kimberley,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,jky26
+H00271203,Ms,Woods,Sian,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,1,sw81
+H00352410,Mr,Walker,Victor,Marcus,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,vmw78
+H00127918,Ms,Middleton,Jill,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,jm36
+H00174409,Mr,Andrews,George,Terence,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,3,gta66
+H00174975,Mrs,Steele,Charlotte,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,4,cs28
+H00324107,Mr,Holden,Conor,Ian,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,3,cih67
+H00266630,Mr,Lee,William,Michael,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,2,wml67
+H00129918,Mr,Oliver,Dominic,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,4,do12
+H00162981,Mr,Jackson,Samuel,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,sj76
+H00172255,Mr,Holt,Callum,Gavin,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,2,cgh40
+H00190740,Mrs,Brooks,Wendy,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,4,wb76
+H00311855,Mr,Willis,Gary,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,4,gw64
+H00252334,Ms,Cross,Olivia,Zoe,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,1,ozc55
+H00175345,Mr,Matthews,Abdul,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,4,am73
+H00395544,Mr,Williams,Terence,Raymond,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,3,trw61
+H00385044,Ms,Simpson,Hollie,Zoe,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,3,hzs29
+H00306719,Mr,Jackson,Roger,Bernard,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,rbj34
+H00170748,Mr,Bird,Alexander,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,ab2
+H00195456,Mr,Bentley,Brian,Karl,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,bkb20
+H00339114,Mr,Brown,Justin,Abdul,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,2,jab77
+H00340054,Ms,Owens,Margaret,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,2,mo93
+H00363942,Mr,Smith,Ricky,Alan,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,4,ras34
+H00111021,Mr,Jarvis,Kenneth,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,kj50
+H00145615,Mr,Fletcher,Wayne,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,4,wf8
+H00231782,Ms,Clark,Amy,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,1,ac74
+H00290819,Mr,Godfrey,Joel,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,jg21
+H00364362,Mr,Edwards,Shane,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,2,se31
+H00315239,Mr,Evans,Toby,Raymond,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,3,tre32
+H00119930,Mr,Powell,Christopher,Frank,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,2,cfp8
+H00230053,Mr,Chapman,Kyle,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,2,kc71
+H00331038,Mr,Jones,Jordan,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,3,jj31
+H00338284,Mrs,Howell,Molly,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,3,mh1
+H00105940,Ms,Green,Kirsty,Hazel,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,khg38
+H00241839,Mr,Gibson,Ryan,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,2,rg71
+H00114012,Mr,Bradshaw,Keith,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,1,kb41
+H00221444,Ms,Allen,Rachel,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,3,ra53
+H00179168,Mr,Francis,Billy,Shane,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,bsf49
+H00161988,Ms,Clarke,Jade,Lydia,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,jlc13
+H00197490,Ms,Brennan,Joanne,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,jb9
+H00292791,Mr,McCarthy,Roger,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,1,rm23
+H00380601,Mr,Walters,Brett,Martyn,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,4,bmw72
+H00380130,Mr,Palmer,Ian,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,4,ip48
+H00267989,Ms,Fry,Natasha,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,3,nf64
+H00256456,Ms,Wright,Lynne,Fiona,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,3,lfw18
+H00141172,Mr,Robinson,Bruce,Benjamin,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,bbr47
+H00263019,Mr,Goodwin,Simon,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,sg84
+H00261388,Mr,Stevens,Charlie,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,cs13
+H00311521,Ms,Cox,Leah,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,1,lc18
+H00171397,Ms,Jarvis,Marilyn,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,4,mj15
+H00399283,Mr,Green,Robin,Edward,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,4,reg46
+H00364108,Mr,Reed,Mitchell,Ashley,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,2,mar28
+H00149809,Mr,Davies,Carl,Dylan,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,cdd5
+H00199263,Mr,Austin,Nigel,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,na82
+H00391117,Mr,Young,Owen,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,2,oy75
+H00100724,Mr,Wallace,Marcus,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,mw19
+H00354547,Mr,Flynn,Ben,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,3,bf17
+H00208768,Ms,Holden,Amy,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,4,ah39
+H00343998,Mr,Ashton,Alex,Frank,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,1,afa14
+H00375038,Mr,Rice,Liam,Gordon,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,4,lgr17
+H00115862,Mr,Collier,Sean,Declan,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,sdc87
+H00308830,Ms,Green,Jessica,Fiona,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,jfg96
+H00200259,Mr,Davies,Julian,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,jd10
+H00287199,Mr,Brown,Thomas,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,2,tb35
+H00186457,Ms,Simpson,Sian,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,4,ss32
+H00138182,Ms,Evans,Katie,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,2,ke54
+H00284053,Ms,Duffy,Deborah,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,4,dd16
+H00293702,Mr,Barker,George,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,3,gb70
+H00363759,Mr,Robson,Elliott,Keith,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,3,ekr61
+H00380191,Mr,Pickering,Joseph,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,4,jp87
+H00164803,Ms,Davies,Alexandra,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,ad10
+H00384410,Mr,Curtis,Mohammed,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,3,mc5
+H00140724,Mr,Martin,Kevin,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,4,km97
+H00229521,Ms,Carey,Jessica,Pauline,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,3,jpc78
+H00342735,Mr,Wilkinson,Robert,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,3,rw92
+H00174826,Mr,Cooper,Christopher,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,1,cc22
+H00236317,Mr,Pope,Alex,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,4,ap58
+H00364147,Mr,Davies,Louis,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,ld12
+H00225407,Mr,Howard,Michael,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,mh12
+H00173885,Mr,Evans,Mathew,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,me11
+H00168091,Mr,Moran,Stanley,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,sm37
+H00116643,Mr,Stevenson,Ricky,Bruce,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,rbs34
+H00225796,Mr,Lawson,Andrew,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,2,al50
+H00217601,Mr,Mitchell,Brian,Garry,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,4,bgm8
+H00347450,Mr,Kirk,George,Christopher,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,1,gck80
+H00224271,Mr,Connor,Frank,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,fc74
+H00272454,Mr,Palmer,Adrian,Michael,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,amp29
+H00266787,Ms,Jackson,Angela,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,aj19
+H00255723,Mr,Humphries,Martyn,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,2,mh80
+H00120104,Ms,Wood,Barbara,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,1,bw98
+H00309132,Mr,Simmons,Elliott,Martyn,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,2,ems43
+H00397341,Mr,Thomas,Jacob,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,jt43
+H00316349,Ms,Stephens,Francesca,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,1,fs73
+H00214839,Mr,Perry,Jack,Billy,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,3,jbp21
+H00359563,Mr,Parry,Jeremy,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,4,jp76
+H00193329,Mr,Harris,Jonathan,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,3,jh14
+H00266211,Mr,Clark,Nathan,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,4,nc62
+H00380962,Mr,Nolan,Leigh,Howard,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,lhn51
+H00187351,Mr,Payne,Henry,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,2,hp23
+H00182466,Mr,West,Lewis,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,3,lw71
+H00307461,Mr,Peters,Frank,Michael,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,2,fmp6
+H00234410,Ms,Baker,Rita,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,2,rb10
+H00167279,Mr,Parsons,Elliott,Shaun,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,2,esp47
+H00364096,Ms,Robinson,Danielle,Jodie,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,djr29
+H00365332,Mr,Bibi,Arthur,Gerard,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,agb80
+H00327212,Mr,Ashton,Elliott,Bryan,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,eba69
+H00395964,Mr,O'Connor,Roy,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,ro1
+H00377603,Mr,Todd,Andrew,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,3,at43
+H00286109,Ms,Edwards,Sheila,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,1,se89
+H00264843,Mr,Jackson,Lee,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,3,lj58
+H00261045,Mr,Skinner,Jack,Sam,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,4,jss4
+H00288729,Ms,Miller,Gail,Lydia,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,4,glm6
+H00236630,Mr,Jones,Gordon,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,gj37
+H00154258,Mr,Hall,Jamie,Richard,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,1,jrh67
+H00372529,Mrs,Morley,Hilary,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,1,hm55
+H00287937,Ms,Palmer,Lydia,Ann,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,1,lap14
+H00375833,Mr,Day,Karl,Benjamin,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,4,kbd63
+H00139832,Mr,Sutton,Damien,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,2,ds62
+H00287094,Mr,Ball,Shaun,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,2,sb22
+H00154275,Mr,King,Martyn,Shaun,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,msk80
+H00326845,Ms,Wilson,Hilary,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,3,hw21
+H00320379,Mr,Powell,Gerald,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,gp31
+H00210392,Ms,Baxter,Rebecca,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,rb31
+H00203040,Mr,Thomas,Harry,Gavin,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,4,hgt17
+H00218481,Mr,Davies,Jason,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,jd72
+H00153237,Ms,Begum,Kayleigh,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,4,kb39
+H00149192,Mr,Dawson,Danny,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,dd84
+H00275267,Ms,Patterson,Christine,Beth,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,cbp24
+H00102333,Mr,Farmer,Gareth,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,4,gf68
+H00156905,Mr,Thornton,George,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,gt97
+H00166396,Ms,Gilbert,Jasmine,Katy,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,2,jkg81
+H00316010,Ms,Carter,Georgina,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,1,gc99
+H00273984,Ms,Fry,Natasha,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,4,nf27
+H00318274,Mr,Leonard,Adam,Terry,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,1,atl23
+H00370419,Ms,Randall,Dawn,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,3,dr86
+H00129749,Mr,Hopkins,Callum,Stephen,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,1,csh89
+H00384281,Mr,Pope,Owen,Simon,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,2,osp84
+H00224786,Mr,Edwards,Jamie,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,4,je59
+H00260703,Mr,Harrison,Kyle,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,1,kh41
+H00386391,Mr,Evans,Gregory,Daniel,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,2,gde14
+H00364872,Mr,Hancock,Tom,Alex,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,2,tah81
+H00294806,Ms,Smith,Barbara,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,1,bs85
+H00110725,Mr,White,Geoffrey,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,3,gw59
+H00188064,Mr,Khan,Gregory,Robert,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,grk90
+H00182827,Mr,Mills,Edward,Tony,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,4,etm51
+H00377109,Mr,Abbott,Glenn,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,1,ga88
+H00341234,Mrs,Kirk,Stacey,Clare,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,4,sck87
+H00337146,Mr,Watson,Vincent,Garry,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,4,vgw19
+H00120760,Mr,Wilkinson,Roy,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,1,rw93
+H00218121,Mr,Bell,Wayne,Jake,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,4,wjb4
+H00295669,Mr,Taylor,Jeremy,Gary,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,3,jgt68
+H00343804,Mr,Thorpe,Vincent,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,vt53
+H00235892,Mr,Simpson,Albert,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,as89
+H00358674,Ms,Allen,Michelle,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,3,ma26
+H00287509,Mr,Page,Matthew,Sam,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,3,msp58
+H00359950,Mr,Hawkins,Justin,Bryan,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,1,jbh6
+H00331438,Mr,Kennedy,Tom,Stanley,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,2,tsk86
+H00349929,Mr,Finch,Jeffrey,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,3,jf16
+H00353769,Mrs,Barton,Mary,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,2,mb77
+H00185399,Mr,Hill,Bruce,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,4,bh58
+H00317111,Mr,Evans,Albert,Josh,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,aje1
+H00174837,Mr,Hunt,Adrian,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,2,ah71
+H00185029,Ms,Palmer,Josephine,Kirsty,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,4,jkp12
+H00335194,Ms,Baker,Joanna,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,jb50
+H00343907,Mr,Miller,Shane,Samuel,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,1,ssm97
+H00256359,Mr,O'Donnell,William,Ashley,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,wao44
+H00275495,Mr,Berry,Jay,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,3,jb83
+H00286718,Mr,Smith,Antony,Victor,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,1,avs65
+H00308484,Mr,Edwards,Malcolm,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,1,me43
+H00217429,Mr,Wilson,Luke,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,3,lw64
+H00396707,Ms,Herbert,Sheila,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,2,sh17
+H00251059,Mr,Bailey,Edward,Ashley,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,3,eab19
+H00187858,Mrs,Patel,Sylvia,Rebecca,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,2,srp90
+H00243208,Ms,Thomas,Susan,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,2,st17
+H00148188,Mr,Singh,Max,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,ms29
+H00353343,Mr,Myers,Julian,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,4,jm59
+H00295133,Mr,Curtis,Christian,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,1,cc34
+H00273845,Mr,Barnes,Louis,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,2,lb18
+H00210148,Mr,Davies,Victor,Phillip,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,4,vpd96
+H00300243,Mr,Ford,Matthew,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,5,mf78
+H00140708,Mr,Moore,Shane,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,1,sm47
+H00225037,Mr,Mitchell,Carl,Benjamin,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,2,cbm24
+H00235549,Mr,Wilson,Toby,Bernard,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,tbw94
+H00363925,Mr,Taylor,Peter,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,2,pt46
+H00196746,Mr,Williams,Danny,Harry,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,1,dhw30
+H00383480,Mr,Hall,Craig,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,1,ch65
+H00350951,Mr,Moore,Martyn,,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,4,mm7
+H00165747,Ms,Chapman,Nicole,Beth,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,2,nbc49
+H00170694,Ms,Hughes,Jane,Rosie,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,4,jrh70
+H00385471,Mr,Turner,Frank,Anthony,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,2,fat4
+H00328038,Ms,Lees,Sandra,Rita,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,3,srl89
+H00216460,Mr,White,Norman,Victor,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,2,nvw56
+H00161664,Mr,Barton,Jonathan,Stephen,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,1,jsb78
+H00273692,Mr,Butler,Mathew,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,2,mb40
+H00205448,Mr,Hartley,Neil,Kyle,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,nkh86
+H00361968,Ms,Manning,Sophie,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,4,sm61
+H00368719,Ms,Wood,Naomi,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,4,nw58
+H00329340,Mr,Nicholls,Kyle,Bernard,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,1,kbn19
+H00276250,Mr,Morris,Joshua,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,jm79
+H00162880,Mr,Jones,Stephen,,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,1,sj36
+H00157543,Mr,Spencer,Bryan,Douglas,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,3,bds60
+H00242281,Mr,North,Kevin,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,4,kn37
+H00225813,Mr,Wood,Damien,Paul,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,dpw36
+H00276224,Ms,King,Ruth,Aimee,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,2,rak53
+H00314389,Ms,Coates,Sophie,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,1,sc56
+H00242585,Mr,Davies,Karl,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,4,kd26
+H00142204,Mr,Gilbert,Timothy,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,2,tg56
+H00206028,Mr,Andrews,Toby,,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,1,ta83
+H00110051,Mr,Morris,Trevor,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,4,tm44
+H00394288,Mr,Holden,Elliott,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,2,eh84
+H00348395,Mr,Middleton,Wayne,,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,1,wm71
+H00307266,Ms,Allen,Nicola,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,1,na29
+H00304340,Mr,Rogers,Nicholas,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,2,nr77
+H00291976,Mr,White,Lewis,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,lw58
+H00304248,Mr,Shepherd,Edward,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,2,es92
+H00345461,Mr,Hale,Adrian,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,2,ah8
+H00173587,Ms,Peters,Beth,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,2,bp68
+H00181203,Mr,May,Leonard,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,2,lm21
+H00109944,Mr,Hunt,Stanley,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,1,sh55
+H00360843,Mr,Woods,Connor,Ian,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,ciw15
+H00141227,Mr,Powell,Jay,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,1,jp96
+H00323932,Mr,Wilson,Edward,Francis,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,1,efw28
+H00319830,Mr,Doyle,Eric,Vincent,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,1,evd30
+H00295007,Mr,Moore,Elliott,Craig,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,2,ecm8
+H00260753,Ms,Lee,Gillian,,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,gl65
+H00250078,Ms,Williams,Marilyn,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,1,mw67
+H00123893,Mr,Patterson,Martyn,Frederick,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,2,mfp11
+H00211903,Ms,Jones,Catherine,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,4,cj34
+H00155021,Mr,Wilson,David,John,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,djw98
+H00160159,Ms,Farmer,Paige,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,4,pf99
+H00200468,Mr,Kaur,Antony,Leon,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,2,alk17
+H00255626,Mr,Barnett,Eric,Philip,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,4,epb86
+H00340526,Mr,Dixon,Gregory,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,1,gd82
+H00113451,Ms,Smith,Rachael,Alice,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,4,ras1
+H00391267,Mr,Smith,Martin,,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,1,ms15
+H00382952,Mr,Hill,Robin,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,4,rh91
+H00121837,Mr,Jones,Jamie,Darren,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,4,jdj15
+H00197333,Mr,Williams,Carl,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,cw40
+H00374517,Mr,Morgan,Russell,,AS,BSc Information Systems (Internet Systems),BSc Information Systems (Internet Systems),UG,1ED,Edinburgh,202122,2,rm51
+H00188765,Mr,White,Harry,,AS,BSc Information Systems,BSc Information Systems,UG,1ED,Edinburgh,202122,4,hw32
+H00145068,Mr,Nolan,Nigel,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,nn70
+H00281007,Mr,McCarthy,Howard,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,2,hm39
+H00295057,Mr,Edwards,Sam,Mark,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,sme63
+H00262471,Ms,Fox,Janet,Melanie,AS,BSc Information Systems (Management),BSc Information Systems (Management),UG,1ED,Edinburgh,202122,1,jmf18
+H00115215,Mr,Brady,Dylan,,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,3,db62
+H00257908,Ms,Shaw,Charlene,Helen,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,chs67
+H00298556,Ms,Lord,Patricia,Grace,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,pgl77
+H00230438,Mr,Powell,Jeffrey,William,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,3,jwp14
+H00220699,Mrs,Newton,Kim,Debra,AS,BSc Computer Science (Data Science),BSc Computer Science (Data Science),UG,1ED,Edinburgh,202122,2,kdn6
+H00119608,Mr,Gill,Eric,Max,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,2,emg86
+H00372053,Mrs,Carr,Nicola,,AS,BSc Computer Science (Software Engineering),BSc Computer Science (Software Engineering),UG,1ED,Edinburgh,202122,1,nc96
+H00202714,Mr,Page,Albert,Elliott,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,1,aep86
+H00109907,Mr,Ryan,Victor,Conor,AS,BSc Computer Science,BSc Computer Science,UG,1ED,Edinburgh,202122,2,vcr3
+H00178272,Ms,Bell,Mandy,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,3,mb69
+H00247174,Mr,Smart,Benjamin,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,bs14
+H00154581,Ms,Thompson,Eileen,Grace,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,1,egt81
+H00113931,Mr,Miles,Denis,,AS,BSc Information Systems (Interaction Design),BSc Information Systems (Interaction Design),UG,1ED,Edinburgh,202122,2,dm30
+H00345846,Mr,Thomas,Damien,Samuel,AS,MEng Software Engineering,MEng Software Engineering,UG,1ED,Edinburgh,202122,4,dst69
+H00119893,Mr,Reed,Jeffrey,Howard,AS,BSc Data Sciences,BSc Data Sciences,UG,1ED,Edinburgh,202122,3,jhr4
+H00335400,Mr,Brown,Sean,,AS,BSc Software Development for Business,BSc Software Development for Business,UG,1ED,Edinburgh,202122,3,sb5
+H00248605,Mr,Cartwright,Luke,Philip,AS,BSc Computer Systems,BSc Computer Systems,UG,1ED,Edinburgh,202122,3,lpc17
+H00176480,Mr,Campbell,Francis,Mathew,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,1,fmc25
+H00182882,Mr,Williams,Malcolm,,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,4,mw18
+H00215716,Ms,Taylor,Beth,Gillian,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,4,bgt62
+H00100692,Mr,Thompson,Sean,Paul,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,1,spt63
+H00295276,Ms,Fowler,Brenda,Michelle,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,3,bmf38
+H00194778,Mr,Holloway,Sean,,AS,BEng Robotics,BEng Robotics,UG,1ED,Edinburgh,202122,2,sh1
+H00322468,Mr,Davies,Phillip,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,2,pd8
+H00219808,Mr,Williams,Gary,Dominic,AS,BSc Computer Science (Artificial Intelligence),BSc Computer Science (Artificial Intelligence),UG,1ED,Edinburgh,202122,2,gdw3
+H00149802,Mr,Bailey,Ashley,Gordon,AS,BSc Computer Systems (Computer Games Programming),BSc Computer Systems (Computer Games Programming),UG,1ED,Edinburgh,202122,2,agb43
+H00260400,Ms,Haynes,Janet,,AS,BSc Computer Science (Cyber Secuirty),BSc Computer Science (Cyber Secuirty),UG,1ED,Edinburgh,202122,3,jh31
