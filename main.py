@@ -22,6 +22,7 @@ programmes = {}
 uniqueHWIDs = []
 uniqueUserIDs = []
 
+bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean"]
 # endregion
 
 
@@ -45,7 +46,7 @@ class Programme:
         try:
             self.PROG_DESC = row[8].strip()
             # TODO: Make CSV include course code, then use this properly
-            self.PROG_CODE = self.PROG_DESC
+            self.PROG_CODE = row[9].strip()
             self.addCourse(row)
         except Exception as e:
             print("(Programme__inti) Something is wrong with: ", end='')
@@ -234,7 +235,6 @@ class Student:
                     print("Optional Course Added:" + course + "(" + str(
                         courses[course].CREDIT_HOURS) + ") Total Credits this semester: " + str(semesterCredits))
             # print("running credit total: " + str(semesterCredits))
-
         print('')
 
     # TODO: Generate a mark a bit more ... realistically
@@ -290,17 +290,30 @@ def writeCSV2(header, studentList):
         writer = csv.writer(f)
         writer.writerow(header)
         for student in studentList:
+            #  Iterate through the currently active courses (no PERC attribute) and write to file
             for course in student.ACTIVE_COURSES:
-                # write actives row
                 line = []
-                courseHeaders = ["course", "ptrm", "perc", "grade", "credit_hours"]
-                # TODO: Getattr is always returning n/a , figure out why
+                courseHeaders = ["course", "ptrm", "credit_hours"]
                 for column in header:
-                    # If the header's data is stored in the student object, fetch it from the student object
+                    # If the header's data is stored in the course object, fetch it from the course object
                     if bool([x for x in courseHeaders if (x in column.lower())]):
-                        line.append(str(getattr(student, column, " n/a ")))
-                    else:  # If not, fetch it from the course object
-                        line.append(str(getattr(courses[course], column, " n/a ")))
+                        line.append(str(getattr(courses[course], column, "n/a")))
+                    else:  # If not, fetch it from the student object
+                        line.append(str(getattr(student, column, "n/a")))
+                writer.writerow(line)
+
+            # Iterate through the student's completed courses (has PERC attribute associated) and write to file
+            for course in student.COMPLETED_COURSES:
+                line = []
+                courseHeaders = ["course", "ptrm", "credit_hours"]
+                for column in header:
+                    # If the header's data is stored in the course object, fetch it from the course object
+                    if bool([x for x in courseHeaders if (x in column.lower())]):
+                        line.append(str(getattr(courses[course[0]], column, "n/a")))
+                    elif column == "PERC":  # If not, fetch it from the student object
+                        line.append(course[1])
+                    else:
+                        line.append(str(getattr(student, column, "n/a")))
                 writer.writerow(line)
 
 
@@ -334,14 +347,14 @@ def readProgrammes(fileName: string):
                         if row[0] != "":
                             # Add courses to a dictionary of CourseCode: CourseObject
                             courseCode = row[1]
-                            progCode = row[8]
+                            progCode = row[9].strip()
                             if courseCode not in courses and re.match(r'[A-Z]+[0-9]{2}[A-Z]{2}', courseCode):
                                 courses[courseCode] = Course(row)
                             elif courseCode == "1 SCQ":
                                 break
 
                             # Add Programmes to a dictionary of ProgCode: ProgrammeObject
-                            if progCode not in programmes:
+                            if progCode not in programmes and not bool([x for x in bannedKeywords if x in row[8]]):
                                 p = Programme(row)
                                 programmes[progCode] = p
                             else:
@@ -353,25 +366,12 @@ def readProgrammes(fileName: string):
     os.chdir(curDir)
 
 
-def programmeBlackList(bannedKeywords):
-    if not bannedKeywords:
-        bannedKeywords = ["phd", "mdes", "msc", "diploma",
-                          "dubai", "malaysia", "ocean"]
-    bannedProgrammes = []
-    for p in programmes:
-        for keyword in bannedKeywords:
-            if keyword.lower() in p.lower():
-                bannedProgrammes.append(p)
-    for p in bannedProgrammes:
-        programmes.pop(p)
-
-
 if __name__ == '__main__':
     students = []
     headers = readHeaders(sys.argv[1])
 
     readProgrammes("ProgrammeData.xlsx")
-    programmeBlackList([])
+    # programmeBlackList([])
 
     # # Print course List
     # for e in [*courses.values()]:
@@ -387,30 +387,30 @@ if __name__ == '__main__':
     # region Test Print Output
 
     # # Print programme List
-    # for prog in [*programmes.values()]:
-    #     print(prog.PROG_CODE)
-    #     for yearKey in prog.mandCourses:
-    #         if any(prog.mandCourses[yearKey]) or any(prog.optCourses[yearKey]):
-    #             print("\nYear " + str(yearKey))
-    #             print(prog.mandCourses[yearKey])
-    #             print(prog.optCourses[yearKey])
-    #     print("\n ############### \n")
+    for prog in [*programmes.values()]:
+        print(prog.PROG_CODE + " ¦¦¦ " + prog.PROG_DESC)
+        for yearKey in prog.mandCourses:
+            if any(prog.mandCourses[yearKey]) or any(prog.optCourses[yearKey]):
+                print("\nYear " + str(yearKey))
+                print(prog.mandCourses[yearKey])
+                print(prog.optCourses[yearKey])
+        print("\n ############### \n")
 
     # Print student list
-    for s in students:
-        if (len(s.COMPLETED_COURSES) % 4) != 0:
-            # for attribute in (s.__dict__.keys()):
-            #    print(str(attribute) + ":" + str(getattr(s, attribute)), end=" ¦\t")
-            print('')
-            print(s.BANNER_ID + " (" + s.PROG_CODE + " Y" + str(s.YOS_CODE) + "): \nActiveCourses:"
-                  + str(s.ACTIVE_COURSES) + "\nCompleted Courses (" + str(len(s.COMPLETED_COURSES)) + ") :" + str(s.COMPLETED_COURSES))
-            # print("¦¦ Programme Mandatory y" + str(s.YOS_CODE) + ": " +
-            #       str(programmes[s.PROG_CODE].mandCourses[s.YOS_CODE]))
-            # print("¦¦ Programme Optional y" + str(s.YOS_CODE) + ": " +
-            #       str(programmes[s.PROG_CODE].optCourses[s.YOS_CODE]))
-            print('')
+    # for s in students:
+    #     if (len(s.COMPLETED_COURSES) % 4) != 0:
+    #         # for attribute in (s.__dict__.keys()):
+    #         #    print(str(attribute) + ":" + str(getattr(s, attribute)), end=" ¦\t")
+    #         print('')
+    #         print(s.BANNER_ID + " (" + s.PROG_CODE + " Y" + str(s.YOS_CODE) + "): \nActiveCourses:"
+    #               + str(s.ACTIVE_COURSES) + "\nCompleted Courses (" + str(len(s.COMPLETED_COURSES)) + ") :" + str(s.COMPLETED_COURSES))
+    #         # print("¦¦ Programme Mandatory y" + str(s.YOS_CODE) + ": " +
+    #         #       str(programmes[s.PROG_CODE].mandCourses[s.YOS_CODE]))
+    #         # print("¦¦ Programme Optional y" + str(s.YOS_CODE) + ": " +
+    #         #       str(programmes[s.PROG_CODE].optCourses[s.YOS_CODE]))
+    #         print('')
 
     # endregion
 
-    writeCSV(headers, students)
+    writeCSV2(headers, students)
     # writeCSV2(headers, students)
