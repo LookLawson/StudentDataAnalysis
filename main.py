@@ -334,47 +334,28 @@ def readProgrammes(fileName: string):
                         print("(CSV Reader) Something is wrong with: ", end='')
                         print(e)
                         print(row)
-
-    # TODO: Stop removing Phds and Msc from the dictionary if scope widens to accommodate PG
-    bannedKeywords = ["phd", "mdes", "msc", "BSc Software Development for Business", "diploma", "dubai", "malaysia",
-                      "ocean"]
-    bannedProgrammes = []
-    for p in programmes:
-        for keyword in bannedKeywords:
-            if keyword in p.lower():
-                bannedProgrammes.append(p)
-    for p in bannedProgrammes:
-        programmes.pop(p)
-
     os.chdir(curDir)
 
 
-# TODO: TO BE REPLACED BY WEB SCRAPER WITH PROPER SEMESTER CLASSIFICATION
-def readCourseList(folderPath: string):
-    courseSemester = 1
-    directory = os.getcwd()
-    os.chdir(folderPath)
-    for file in os.listdir():
-        if file.endswith(".txt"):
-            file_path = Path(file)
-            with open(file_path, 'r') as f:
-                for line in f.readlines():
-                    match = re.search(r'\s[A-Z]+[0-9]{2}[A-Z]{2}\s', line)
-                    if match:
-                        courseCode = match.group(0).strip()
-                        courseName = line[10:]
-                        courses[courseCode] = Course(['', courseCode, courseName, '', courseSemester])
-                    elif line.startswith("Semester "):
-                        courseSemester = int(line[-2:])
-    os.chdir(directory)
+def programmeBlackList(bannedKeywords):
+    if not bannedKeywords:
+        bannedKeywords = ["phd", "mdes", "msc", "diploma",
+                          "dubai", "malaysia", "ocean"]
+    bannedProgrammes = []
+    for p in programmes:
+        for keyword in bannedKeywords:
+            if keyword.lower() in p.lower():
+                bannedProgrammes.append(p)
+    for p in bannedProgrammes:
+        programmes.pop(p)
 
 
 if __name__ == '__main__':
     students = []
     headers = readHeaders(sys.argv[1])
 
-    # readCourseList("programmes")
     readProgrammes("ProgrammeData.xlsx")
+    programmeBlackList([])
 
     # # Print course List
     # for e in [*courses.values()]:
@@ -402,8 +383,8 @@ if __name__ == '__main__':
     # Print student list
     for s in students:
         if (len(s.COMPLETED_COURSES) % 4) != 0:
-            for attribute in (s.__dict__.keys()):
-               print(str(attribute) + ":" + str(getattr(s, attribute)), end=" ¦\t")
+            # for attribute in (s.__dict__.keys()):
+            #    print(str(attribute) + ":" + str(getattr(s, attribute)), end=" ¦\t")
             print('')
             print(s.BANNER_ID + " (" + s.PROG_CODE + " Y" + str(s.YOS_CODE) + "): \nActiveCourses:"
                   + str(s.ACTIVE_COURSES) + "\nCompleted Courses (" + str(len(s.COMPLETED_COURSES)) + ") :" + str(s.COMPLETED_COURSES))
