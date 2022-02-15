@@ -263,14 +263,19 @@ def writeCSV(header, studentList):
         writer = csv.writer(f)
         writer.writerow(header)
         for student in studentList:
+            # Define list of attributes to fetch from the Course object
+            courseHeaders = ["course", "ptrm", "credit_hours"]
+            programmeHeaders = ["yos_code"]
             #  Iterate through the currently active courses (no PERC attribute) and write to file
             for course in student.ACTIVE_COURSES:
                 line = []
-                courseHeaders = ["course", "ptrm", "credit_hours"]
                 for column in header:
                     # If the header's data is stored in the course object, fetch it from the course object
                     if bool([x for x in courseHeaders if (x in column.lower())]):
                         line.append(str(getattr(courses[course], column, "n/a")))
+                    # If the header is YOS_CODE, find what year of the students programme this course belongs to
+                    elif bool([x for x in programmeHeaders if (x in column.lower())]):
+                        line.append(str(findYearForCourse(student.PROG_CODE, course)))
                     else:  # If not, fetch it from the student object
                         line.append(str(getattr(student, column, "n/a")))
                 writer.writerow(line)
@@ -278,16 +283,31 @@ def writeCSV(header, studentList):
             # Iterate through the student's completed courses (has PERC attribute associated) and write to file
             for course in student.COMPLETED_COURSES:
                 line = []
-                courseHeaders = ["course", "ptrm", "credit_hours"]
                 for column in header:
                     # If the header's data is stored in the course object, fetch it from the course object
                     if bool([x for x in courseHeaders if (x in column.lower())]):
                         line.append(str(getattr(courses[course[0]], column, "n/a")))
-                    elif column == "PERC":  # If not, fetch it from the student object
+                    # If the header is YOS_CODE, find what year of the students programme this course belongs to
+                    elif bool([x for x in programmeHeaders if (x in column.lower())]):
+                        line.append(str(findYearForCourse(student.PROG_CODE, course[0])))
+                    elif column == "PERC":
                         line.append(course[1])
-                    else:
+                    else:  # If not, fetch it from the student object
                         line.append(str(getattr(student, column, "n/a")))
                 writer.writerow(line)
+
+
+# Helper function to check a programmes course dictionaries to find what year of study it belongs to
+def findYearForCourse(programmeCode, courseCode):
+    programme = programmes[programmeCode]
+    course = courses[courseCode]
+    for year in programme.mandCourses:
+        if course.COURSE_CODE in programme.mandCourses[year][course.PTRM-1]:
+            return year
+    for year in programme.optCourses:
+        if course.COURSE_CODE in programme.optCourses[year][course.PTRM-1]:
+            return year
+
 
 
 def readHeaders(filename: string):
