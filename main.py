@@ -24,6 +24,7 @@ bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean",
 
 FLAG_SECOND_YEAR_SLUMP = True
 FACTOR_SECOND_YEAR_SLUMP = 0.2
+FREQUENCY_SECOND_YEAR_SLUMP = [1, 2, 3]  # Probability is equal to 1 / len(FREQUENCY)
 
 # Keep track of generated ID's to ensure uniqueness
 uniqueHWIDs = []
@@ -249,7 +250,7 @@ class Student:
         else:
             mark = 0
 
-        if FLAG_SECOND_YEAR_SLUMP and random.choice([1, 2, 3]) == 1:
+        if FLAG_SECOND_YEAR_SLUMP and random.choice(FREQUENCY_SECOND_YEAR_SLUMP) == 1:
             if year == 1:
                 mark += mark * FACTOR_SECOND_YEAR_SLUMP
             elif year == 2:
