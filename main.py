@@ -12,17 +12,21 @@ from pathlib import Path
 from collections import OrderedDict
 
 # region Variables
-studentCount = 400
+studentCount = 50
 currentAcademicYear = 202122
 currentSemester = 2
-courses = {}
-programmes = {}
+
+# Default mark distribution for 1st, 2:1, 2:2, and 3rd class degrees. (See random.choices() weight parameter)
+markDistribution = [1.5, 2, 1, 0.5]
+# Troublesome programmes and courses in XLSX dataset are removed as they are not within the project scope.
+bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "electi", "or ele"]
 
 # Keep track of generated ID's to ensure uniqueness
 uniqueHWIDs = []
 uniqueUserIDs = []
 
-bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "electi", "or ele"]
+courses = {}
+programmes = {}
 # endregion
 
 
@@ -94,6 +98,8 @@ class Student:
         self.ESTS_CODE = "EN"  # Language?
         self.ACTIVE_COURSES = []
         self.COMPLETED_COURSES = []
+        # Establish what degree class a student is upon creation to generate marks accordingly.
+        self.EXPECTED_DEG_CLASS = random.choices([1, 2.1, 2.2, 3], weights=markDistribution)[0]
 
         self.__genPersonalInfo(f)
         self.__genCourseInfo()
@@ -221,9 +227,19 @@ class Student:
                     self.COMPLETED_COURSES.append((course, self.__generateMark()))
                     semesterCredits += courses[course].CREDIT_HOURS
 
-    # TODO: Generate a mark a bit more ... realistically
     def __generateMark(self):
-        return random.randrange(45, 90)
+        deg = self.EXPECTED_DEG_CLASS
+        margin = 5
+        if deg == 1:
+            return random.randrange(70-margin, 88+margin)
+        elif deg == 2.1:
+            return random.randrange(60-margin, 70+margin)
+        elif deg == 2.2:
+            return random.randrange(50-margin, 60+margin)
+        elif deg == 3:
+            return random.randrange(40-margin, 50+margin)
+        else:
+            return 0
 
     def getStudentCourses(self, year, semesterIndex):
         l = []
@@ -404,4 +420,5 @@ if __name__ == '__main__':
     for j in range(studentCount):
         s = Student(faker)
         students.append(s)
+        print(s.EXPECTED_DEG_CLASS, s.LAST_NAME)
     writeCSV(headers, students)
