@@ -22,6 +22,9 @@ markDistribution = [1.5, 2, 1, 0.5]
 # Troublesome programmes and courses in XLSX dataset are removed as they are not within the project scope.
 bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "electi", "or ele"]
 
+FLAG_SECOND_YEAR_SLUMP = True
+FACTOR_SECOND_YEAR_SLUMP = 0.2
+
 # Keep track of generated ID's to ensure uniqueness
 uniqueHWIDs = []
 uniqueUserIDs = []
@@ -230,7 +233,7 @@ class Student:
 
     # Generates a random mark within the expected degree range +-margin and has a 1/3 chance of +-20% in 1st and
     # 2nd year respectively, this is to simulate students with previous experience who excel in first year and pull
-    # back in second year due to building bad habits for university study
+    # back in second year due to building bad habits for university study or burnout.
     def __generateMark(self, course):
         deg = self.EXPECTED_DEG_CLASS
         margin = 6
@@ -246,11 +249,11 @@ class Student:
         else:
             mark = 0
 
-        if random.choice([1, 2, 3]) == 1:
+        if FLAG_SECOND_YEAR_SLUMP and random.choice([1, 2, 3]) == 1:
             if year == 1:
-                mark = mark*1.2
+                mark += mark * FACTOR_SECOND_YEAR_SLUMP
             elif year == 2:
-                mark = mark*0.8
+                mark -= mark * FACTOR_SECOND_YEAR_SLUMP
         return math.trunc(min(mark, 99))
 
     def getStudentCourses(self, year, semesterIndex):
