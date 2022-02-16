@@ -229,7 +229,7 @@ class Student:
 
     def __generateMark(self):
         deg = self.EXPECTED_DEG_CLASS
-        margin = 5
+        margin = 8
         if deg == 1:
             return random.randrange(70-margin, 88+margin)
         elif deg == 2.1:
