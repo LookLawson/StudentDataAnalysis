@@ -12,7 +12,7 @@ from pathlib import Path
 from collections import OrderedDict
 
 # region Variables
-studentCount = 50
+studentCount = 200
 currentAcademicYear = 202122
 currentSemester = 2
 
@@ -140,8 +140,8 @@ class Student:
                 validYears.append(year)
         self.YOS_CODE = random.randrange(0, max(validYears)) + 1
 
+        # Deprecated as long as PG programmes are in the bannedProgramme global list
         if "MSc" in self.PROG_DESC or "PhD" in self.PROG_DESC:
-            # TODO: You're still an UG until year 5 even if you're own a MSc course though right?
             # Check to see which years in a programme actually contain courses
             if self.YOS_CODE != 5:
                 self.LEVL_CODE = "UG"
@@ -150,7 +150,7 @@ class Student:
         else:
             self.LEVL_CODE = "UG"
 
-        # TODO: Account for inactive and non-Edinburgh campus student
+        # Project Scope is limited to Edinburgh Campus Students
         self.CAMP_CODE = "1ED"
         self.CAMP_DESC = "Edinburgh"
         self.ACTIVE_STATUS = "AS"
@@ -178,12 +178,12 @@ class Student:
     def __addMandatoryCourses(self, year, semesterIndex):
         for course in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
             if self.YOS_CODE > year:
-                self.COMPLETED_COURSES.append((course, self.__generateMark()))
+                self.COMPLETED_COURSES.append((course, self.__generateMark(course)))
             elif self.YOS_CODE == year:
                 if semesterIndex == currentSemester-1:
                     self.ACTIVE_COURSES.append(course)
                 elif semesterIndex < currentSemester-1:
-                    self.COMPLETED_COURSES.append((course, self.__generateMark()))
+                    self.COMPLETED_COURSES.append((course, self.__generateMark(course)))
 
     # Adds optional courses from the student's programme year and semester until the semester's courses sum 60 credits
     def __addOptionalCourse(self, year, semesterIndex):
@@ -217,29 +217,38 @@ class Student:
 
             # Add optional courses for each year up until active year, then add to active course list.
             if self.YOS_CODE > year:
-                self.COMPLETED_COURSES.append((course, self.__generateMark()))
+                self.COMPLETED_COURSES.append((course, self.__generateMark(course)))
                 semesterCredits += courses[course].CREDIT_HOURS
             elif self.YOS_CODE == year:
                 if semesterIndex == currentSemester-1:
                     self.ACTIVE_COURSES.append(course)
                     semesterCredits += courses[course].CREDIT_HOURS
                 elif semesterIndex < currentSemester-1:
-                    self.COMPLETED_COURSES.append((course, self.__generateMark()))
+                    self.COMPLETED_COURSES.append((course, self.__generateMark(course)))
                     semesterCredits += courses[course].CREDIT_HOURS
 
-    def __generateMark(self):
+    # Generates a random mark within the expected degree range +- a margin
+    # then multiplies by a factor of +-20% for first year and second year respectively
+    def __generateMark(self, course):
         deg = self.EXPECTED_DEG_CLASS
         margin = 8
+        year = findYearForCourse(self.PROG_CODE, course)
         if deg == 1:
-            return random.randrange(70-margin, 88+margin)
+            mark = random.randrange(70-margin, 85+margin)
         elif deg == 2.1:
-            return random.randrange(60-margin, 70+margin)
+            mark = random.randrange(60-margin, 70+margin)
         elif deg == 2.2:
-            return random.randrange(50-margin, 60+margin)
+            mark = random.randrange(50-margin, 60+margin)
         elif deg == 3:
-            return random.randrange(40-margin, 50+margin)
+            mark = random.randrange(40-margin, 50+margin)
         else:
-            return 0
+            mark = 0
+        if year == 1:
+            return min(mark*1.2, 99)
+        elif year == 2:
+            return min(mark*0.8, 99)
+        else:
+            return min(mark, 99)
 
     def getStudentCourses(self, year, semesterIndex):
         l = []
