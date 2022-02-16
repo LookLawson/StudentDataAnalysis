@@ -1,5 +1,6 @@
 # Import packages
 import csv
+import math
 import sys
 import string
 import random
@@ -227,14 +228,15 @@ class Student:
                     self.COMPLETED_COURSES.append((course, self.__generateMark(course)))
                     semesterCredits += courses[course].CREDIT_HOURS
 
-    # Generates a random mark within the expected degree range +- a margin
-    # then multiplies by a factor of +-20% for first year and second year respectively
+    # Generates a random mark within the expected degree range +-margin and has a 1/3 chance of +-20% in 1st and
+    # 2nd year respectively, this is to simulate students with previous experience who excel in first year and pull
+    # back in second year due to building bad habits for university study
     def __generateMark(self, course):
         deg = self.EXPECTED_DEG_CLASS
-        margin = 8
+        margin = 6
         year = findYearForCourse(self.PROG_CODE, course)
         if deg == 1:
-            mark = random.randrange(70-margin, 85+margin)
+            mark = random.randrange(70-margin, 80+margin)
         elif deg == 2.1:
             mark = random.randrange(60-margin, 70+margin)
         elif deg == 2.2:
@@ -243,12 +245,13 @@ class Student:
             mark = random.randrange(40-margin, 50+margin)
         else:
             mark = 0
-        if year == 1:
-            return min(mark*1.2, 99)
-        elif year == 2:
-            return min(mark*0.8, 99)
-        else:
-            return min(mark, 99)
+
+        if random.choice([1, 2, 3]) == 1:
+            if year == 1:
+                mark = mark*1.2
+            elif year == 2:
+                mark = mark*0.8
+        return math.trunc(min(mark, 99))
 
     def getStudentCourses(self, year, semesterIndex):
         l = []
