@@ -1,23 +1,20 @@
 
 
-// Calculate the average difference in marks between each year in Computer Science
-MATCH (s:Student) WHERE s.BANNER_ID = "H00333527"
-WITH RANGE(1, s.YOS_CODE) AS years, s
-UNWIND years as year
-MATCH (s)-[r:ENROLLED]-(c:Course) WHERE r.YOS_CODE = year
-WITH AVG(r.PERC) as average, s
-SET s.year = average
-
-
-MATCH (s:Student)-[r:ENROLLED]-(c:Course) WHERE s.BANNER_ID = "H00333527"
-WITH s.BANNER_ID as student, r.YOS_CODE as year
-RETURN student, year;
-
-MATCH (s:Student) WHERE s.BANNER_ID = "H00144254"
-WITH s, RANGE(1,s.YOS_CODE) as years
+// Calculate average marks per year per programme [Bar Chart]
+MATCH (p:Programme) //WHERE p.PROG_CODE = "F291-COS"
+WITH p, RANGE(1,p.PROG_DURATION) as years
 UNWIND years as year 
-	CALL apoc.cypher.run('MATCH (s:Student)-[r:ENROLLED]-(c:Course) WHERE s.BANNER_ID = "'+s.BANNER_ID+'" AND r.YOS_CODE = '+year+' AND r.ACTIVE = FALSE RETURN AVG(r.PERC) as average', {})
-YIELD value
-RETURN value
-	
+MATCH (:Student)-[r:ENROLLED]->(:Course)-[:COURSE_PROGRAMME]-(p) WHERE r.YOS_CODE = year AND r.ACTIVE = FALSE 
+WITH AVG(r.PERC) as average, year, p
+RETURN round(average,2) as value, year, p.PROG_DESC
 
+// Degree Classification Distribution [Pie Chart]
+MATCH (s:Student)
+RETURN s.DEG_CLASS as DegreeClassification, 
+count(s.DEG_CLASS) as Count ORDER BY Count
+
+
+// Average difference between a students grades in a course and its prerequisite course [Table]
+MATCH (c:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(pc:Course)<-[:PRE_REQUISITE]-(c)
+WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE
+RETURN ABS(AVG(r1.PERC-r2.PERC)) AS AbsoluteDifference, c.COURSE_CODE as Course, pc.COURSE_CODE as PreReqCourse

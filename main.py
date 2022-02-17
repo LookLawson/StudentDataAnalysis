@@ -14,7 +14,7 @@ from collections import OrderedDict
 
 # region Variables
 studentCount = 200
-currentAcademicYear = 202122
+currentTerm = 202122
 currentSemester = 2
 
 # Default mark distribution for 1st, 2:1, 2:2, and 3rd class degrees. (See random.choices() weight parameter)
@@ -25,6 +25,9 @@ bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean",
 FLAG_SECOND_YEAR_SLUMP = True
 FACTOR_SECOND_YEAR_SLUMP = 0.2
 FREQUENCY_SECOND_YEAR_SLUMP = [1, 2, 3]  # Probability is equal to 1 / len(FREQUENCY)
+
+FLAG_INACTIVE_STUDENTS = True
+YEAR_COUNT_INACTIVE_STUDENTS = 1  # Maximum value is 17, Value of 1 will allow inactive students from up to 5 years ago
 
 # Keep track of generated ID's to ensure uniqueness
 uniqueHWIDs = []
@@ -143,6 +146,9 @@ class Student:
         for year in programmes[self.PROG_CODE].mandCourses:
             if any(programmes[self.PROG_CODE].mandCourses[year]):
                 validYears.append(year)
+        for year in programmes[self.PROG_CODE].optCourses:
+            if any(programmes[self.PROG_CODE].optCourses[year]):
+                validYears.append(year)
         self.YOS_CODE = random.randrange(0, max(validYears)) + 1
 
         # Deprecated as long as PG programmes are in the bannedProgramme global list
@@ -158,12 +164,14 @@ class Student:
         # Project Scope is limited to Edinburgh Campus Students
         self.CAMP_CODE = "1ED"
         self.CAMP_DESC = "Edinburgh"
-        self.ACTIVE_STATUS = "AS"
 
-        if self.ACTIVE_STATUS == "AS":
-            self.TERM_CODE = currentAcademicYear
-        else:
-            self.TERM_CODE = random.choice(["202021", "201920", "201819", "201718", "201617", "201516"])
+        self.ACTIVE_STATUS = "AS"
+        self.TERM_CODE = currentTerm
+        if FLAG_INACTIVE_STUDENTS and random.choice(range(YEAR_COUNT_INACTIVE_STUDENTS+1)) != 1:
+            self.ACTIVE_STATUS = "IS"
+            terms = [currentTerm - (i * 101) for i in range(YEAR_COUNT_INACTIVE_STUDENTS)]
+            self.TERM_CODE = (random.choice(terms))
+            self.YOS_CODE = max(validYears)+1
 
     def __genCourses(self):
         # Loop through each year and semester, adding all mandatory courses from the students programme.
@@ -185,7 +193,7 @@ class Student:
             if self.YOS_CODE > year:
                 self.COMPLETED_COURSES.append((course, self.__generateMark(course)))
             elif self.YOS_CODE == year:
-                if semesterIndex == currentSemester-1:
+                if semesterIndex == currentSemester-1 and self.ACTIVE_STATUS == "AS":
                     self.ACTIVE_COURSES.append(course)
                 elif semesterIndex < currentSemester-1:
                     self.COMPLETED_COURSES.append((course, self.__generateMark(course)))
@@ -225,7 +233,7 @@ class Student:
                 self.COMPLETED_COURSES.append((course, self.__generateMark(course)))
                 semesterCredits += courses[course].CREDIT_HOURS
             elif self.YOS_CODE == year:
-                if semesterIndex == currentSemester-1:
+                if semesterIndex == currentSemester-1 and self.ACTIVE_STATUS == "AS":
                     self.ACTIVE_COURSES.append(course)
                     semesterCredits += courses[course].CREDIT_HOURS
                 elif semesterIndex < currentSemester-1:
@@ -298,34 +306,39 @@ def writeCSV(header, studentList):
             # Define list of attributes to fetch from the Course object
             courseHeaders = ["course", "ptrm", "credit_hours"]
             programmeHeaders = ["yos_code"]
-            #  Iterate through the currently active courses (no PERC attribute) and write to file
-            for course in student.ACTIVE_COURSES:
-                line = []
-                for column in header:
-                    # If the header's data is stored in the course object, fetch it from the course object
-                    if bool([x for x in courseHeaders if (x in column.lower())]):
-                        line.append(str(getattr(courses[course], column, "n/a")))
-                    # If the header is YOS_CODE, find what year of the students programme this course belongs to
-                    elif bool([x for x in programmeHeaders if (x in column.lower())]):
-                        line.append(str(findYearForCourse(student.PROG_CODE, course)))
-                    else:  # If not, fetch it from the student object
-                        line.append(str(getattr(student, column, "n/a")))
-                writer.writerow(line)
-
             # Iterate through the student's completed courses (has PERC attribute associated) and write to file
             for course in student.COMPLETED_COURSES:
                 line = []
                 for column in header:
                     # If the header's data is stored in the course object, fetch it from the course object
                     if bool([x for x in courseHeaders if (x in column.lower())]):
-                        line.append(str(getattr(courses[course[0]], column, "n/a")))
+                        line.append(str(getattr(courses[course[0]], column, "")))
                     # If the header is YOS_CODE, find what year of the students programme this course belongs to
                     elif bool([x for x in programmeHeaders if (x in column.lower())]):
                         line.append(str(findYearForCourse(student.PROG_CODE, course[0])))
                     elif column == "PERC":
                         line.append(course[1])
+                    elif column == "GRADE":
+                        line.append(assignGrade(course[1]))
+                    elif column == "TERM_CODE":
+                        i = student.YOS_CODE - findYearForCourse(student.PROG_CODE, course[0])
+                        line.append(student.TERM_CODE - (101 * i))
                     else:  # If not, fetch it from the student object
-                        line.append(str(getattr(student, column, "n/a")))
+                        line.append(str(getattr(student, column, "")))
+                writer.writerow(line)
+
+            #  Iterate through the currently active courses (no PERC attribute) and write to file
+            for course in student.ACTIVE_COURSES:
+                line = []
+                for column in header:
+                    # If the header's data is stored in the course object, fetch it from the course object
+                    if bool([x for x in courseHeaders if (x in column.lower())]):
+                        line.append(str(getattr(courses[course], column, "")))
+                    # If the header is YOS_CODE, find what year of the students programme this course belongs to
+                    elif bool([x for x in programmeHeaders if (x in column.lower())]):
+                        line.append(str(findYearForCourse(student.PROG_CODE, course)))
+                    else:  # If not, fetch it from the student object
+                        line.append(str(getattr(student, column, "")))
                 writer.writerow(line)
 
 
@@ -340,6 +353,21 @@ def findYearForCourse(programmeCode, courseCode):
         if course.COURSE_CODE in programme.optCourses[year][course.PTRM-1]:
             return year
 
+
+# Helper function to calculate grade based on percentage mark
+def assignGrade(mark):
+    if mark >= 70:
+        return 'A'
+    elif mark >= 60:
+        return 'B'
+    elif mark >= 50:
+        return 'C'
+    elif mark >= 40:
+        return 'D'
+    elif mark >= 30:
+        return 'E'
+    else:
+        return 'F'
 
 
 def readHeaders(filename: string):
@@ -436,5 +464,5 @@ if __name__ == '__main__':
     for j in range(studentCount):
         s = Student(faker)
         students.append(s)
-        print(s.EXPECTED_DEG_CLASS, s.LAST_NAME)
+        # print(s.EXPECTED_DEG_CLASS, s.LAST_NAME)
     writeCSV(headers, students)
