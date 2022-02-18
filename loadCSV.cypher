@@ -18,10 +18,10 @@ SET s.TITLE = line.TITLE,
 	s.LAST_NAME = line.LAST_NAME,
 	s.MIDDLE_NAME = line.MIDDLE_NAME,
 	s.FIRST_NAME = line.FIRST_NAME,
-	s.ACTIVE_STATUS = line.ACTIVE_STATUS,
+	s.ACTIVE_STATUS = CASE WHEN line.ACTIVE_STATUS = "AS" THEN TRUE ELSE FALSE,
 	s.LEVL_CODE = line.LEVL_CODE,
 	s.CAMP_DESC = line.CAMP_DESC,
-	s.TERM_CODE = TOINTEGER(line.TERM_CODE),
+	// s.TERM_CODE = TOINTEGER(line.TERM_CODE),
 	// s.YOS_CODE = TOINTEGER(line.YOS_CODE),
 	s.USERNAME = line.USERNAME,
 	s.CAMP_CODE = line.CAMP_CODE
@@ -32,13 +32,13 @@ SET p.PROG_DESC = line.PROG_DESC,
 // Create Course node
 MERGE (c:Course {COURSE_CODE: line.COURSE_CODE})
 SET c.COURSE_TITLE = line.COURSE_TITLE,
-	c.CREDIT_HOURS = toFloat(line.CREDIT_HOURS),
-	c.PTRM = TOINTEGER(line.PTRM)
+	c.CREDIT_HOURS = TOFLOAT(line.CREDIT_HOURS),
+	c.PTRM = TOINTEGER(RIGHT(line.PTRM)) // Take rightmost character so it works for "2" and "S2"
 //Create Relationships
 MERGE (s)-[:ON_PROGRAMME]->(p)
 MERGE (c)<-[:COURSE_PROGRAMME {YOS_CODE: TOINTEGER(line.YOS_CODE)}]->(p)
 // Relationship labels cannot be changed, so this would have to be deleted and a new one created
-CREATE (s)-[r:ENROLLED]->(c)
+CREATE (s)-[r:ENROLLED {TERM_CODE: TOINTEGER(line.TERM_CODE)}]->(c)
 SET r.YOS_CODE = TOINTEGER(line.YOS_CODE)
 SET r.ACTIVE = CASE line.PERC WHEN 'n/a' THEN TRUE WHEN '' THEN TRUE ELSE FALSE END;
 

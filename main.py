@@ -10,8 +10,6 @@ import re
 from faker import Faker
 from pathlib import Path
 
-from collections import OrderedDict
-
 # region Variables
 studentCount = 200
 currentTerm = 202122
@@ -20,7 +18,7 @@ currentSemester = 2
 # Default mark distribution for 1st, 2:1, 2:2, and 3rd class degrees. (See random.choices() weight parameter)
 markDistribution = [1.5, 2, 1, 0.5]
 # Troublesome programmes and courses in XLSX dataset are removed as they are not within the project scope.
-bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "electi", "or ele"]
+bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "elect", "or ele"]
 
 FLAG_SECOND_YEAR_SLUMP = True
 FACTOR_SECOND_YEAR_SLUMP = 0.2
@@ -97,6 +95,7 @@ class Course:
             else:
                 self.CREDIT_HOURS = 15.0
         except Exception as e:
+            print(e)
             print("(Course__init) Something is wrong in line: /n" + row)
 
 
@@ -266,18 +265,18 @@ class Student:
         return math.trunc(min(mark, 99))
 
     def getStudentCourses(self, year, semesterIndex):
-        l = []
+        courseList = []
         for c in self.COMPLETED_COURSES:
             if courses[c[0]].PTRM == semesterIndex + 1:
                 if c[0] in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
                         or c[0] in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
-                    l.append(c[0])
+                    courseList.append(c[0])
         for c in self.ACTIVE_COURSES:
             if courses[c].PTRM == semesterIndex + 1:
                 if c in programmes[self.PROG_CODE].optCourses[year][semesterIndex] \
                         or c in programmes[self.PROG_CODE].mandCourses[year][semesterIndex]:
-                    l.append(c)
-        return l
+                    courseList.append(c)
+        return courseList
 
 
 def genHWUid():
