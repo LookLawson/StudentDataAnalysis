@@ -18,7 +18,7 @@ SET s.TITLE = line.TITLE,
 	s.LAST_NAME = line.LAST_NAME,
 	s.MIDDLE_NAME = line.MIDDLE_NAME,
 	s.FIRST_NAME = line.FIRST_NAME,
-	s.ACTIVE_STATUS = CASE WHEN line.ACTIVE_STATUS = "AS" THEN TRUE ELSE FALSE,
+	s.ACTIVE_STATUS = CASE WHEN line.ACTIVE_STATUS = "AS" THEN TRUE ELSE FALSE END,
 	s.LEVL_CODE = line.LEVL_CODE,
 	s.CAMP_DESC = line.CAMP_DESC,
 	// s.TERM_CODE = TOINTEGER(line.TERM_CODE),
@@ -33,7 +33,7 @@ SET p.PROG_DESC = line.PROG_DESC,
 MERGE (c:Course {COURSE_CODE: line.COURSE_CODE})
 SET c.COURSE_TITLE = line.COURSE_TITLE,
 	c.CREDIT_HOURS = TOFLOAT(line.CREDIT_HOURS),
-	c.PTRM = TOINTEGER(RIGHT(line.PTRM)) // Take rightmost character so it works for "2" and "S2"
+	c.PTRM = TOINTEGER(RIGHT(line.PTRM,1)) // Take rightmost character so it works for "2" and "S2"
 //Create Relationships
 MERGE (s)-[:ON_PROGRAMME]->(p)
 MERGE (c)<-[:COURSE_PROGRAMME {YOS_CODE: TOINTEGER(line.YOS_CODE)}]->(p)
@@ -116,3 +116,28 @@ MATCH (c:Course {COURSE_CODE: "F21AD"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE
 MATCH (c:Course {COURSE_CODE: "F21AN"}), (d:Course {COURSE_CODE: "F21CN"}) MERGE (c)-[:PRE_REQUISITE]->(d);
 MATCH (c:Course {COURSE_CODE: "F21CA"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
 MATCH (c:Course {COURSE_CODE: "F21MP"}), (d:Course {COURSE_CODE: "F21RP"}) MERGE (c)-[:PRE_REQUISITE]->(d);
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////// UNDER MAINTANANCE
+//#####################################################################
+
+// Once rels have been created, load CSV again and add PERC values to INACTIVE student/course rels
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/LookLawson/StudentDataAnnalysis/master/output.csv"
+AS line WITH line, line.ROLL_DATE.split('-') AS date
+MATCH (s:Student)-[r:ENROLLED]-(c:Course)
+WHERE r.ACTIVE = FALSE AND s.BANNER_ID = line.BANNER_ID AND c.COURSE_CODE = line.COURSE_CODE
+SET r.PERC = TOINTEGER(line.PERC),
+	r.OPPORTUNITY = TOINTEGER(line.OPPORTUNITY),
+	r.ROLL_DATE = Date({year: date[2], 
+	month: CASE date[1] WHEN "Jan" THEN 01 WHEN "Feb" THEN 02 WHEN "Mar" THEN 03 WHEN "Apr" THEN 04 WHEN "May" THEN 05 WHEN "Jun" THEN 06 WHEN "Jul" THEN 07 WHEN "Aug" THEN 08 WHEN "Sep" THEN 09 WHEN "Oct" THEN 10 WHEN "Nov" THEN 11 WHEN "Dec" THEN 12 END, 
+	day:date[0]});

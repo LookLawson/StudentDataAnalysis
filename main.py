@@ -322,7 +322,22 @@ def writeCSV(header, studentList):
                     elif column == "TERM_CODE":
                         i = student.YOS_CODE - findYearForCourse(student.PROG_CODE, course[0])
                         line.append(student.TERM_CODE - (101 * i))
-                    else:  # If not, fetch it from the student object
+                    elif column == "ROLL_DATE":
+                        i = student.YOS_CODE - findYearForCourse(student.PROG_CODE, course[0])
+                        term = str(student.TERM_CODE - (101 * i))
+                        if courses[course[0]].PTRM == 1:
+                            date = "31-Oct-" + term[:4]
+                        elif courses[course[0]].PTRM == 2:
+                            date = "28-Jan-" + term[:2] + term[-2:]
+                        else:
+                            date = "25-May-" + term[:2] + term[-2:]
+                        line.append(date)
+                    # TODO: Account for failing a course and resitting (i.e more than one attempt)
+                    elif column == "OPPORTUNITY":
+                        line.append("1")
+                    elif column == "RESIT_FLAG":
+                        line.append("N")
+                    else:  # If not any of the above, fetch it from the student object
                         line.append(str(getattr(student, column, "")))
                 writer.writerow(line)
 
@@ -336,6 +351,14 @@ def writeCSV(header, studentList):
                     # If the header is YOS_CODE, find what year of the students programme this course belongs to
                     elif bool([x for x in programmeHeaders if (x in column.lower())]):
                         line.append(str(findYearForCourse(student.PROG_CODE, course)))
+                    elif column == "ROLL_DATE":
+                        if courses[course].PTRM == 1:
+                            date = "31-Oct-" + str(student.TERM_CODE)[:4]
+                        elif courses[course].PTRM == 2:
+                            date = "28-Jan-" + str(student.TERM_CODE)[:2] + str(student.TERM_CODE)[-2:]
+                        else:
+                            date = "25-May-" + str(student.TERM_CODE)[:2] + str(student.TERM_CODE)[-2:]
+                        line.append(date)
                     else:  # If not, fetch it from the student object
                         line.append(str(getattr(student, column, "")))
                 writer.writerow(line)
