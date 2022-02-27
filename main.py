@@ -244,7 +244,7 @@ class Student:
     # back in second year due to building bad habits for university study or burnout.
     def __generateMark(self, course):
         deg = self.EXPECTED_DEG_CLASS
-        margin = 1
+        margin = 10
         year = findYearForCourse(self.PROG_CODE, course)
         if deg == 1:
             # 1st class students have a 1/5 chance of getting 90+
