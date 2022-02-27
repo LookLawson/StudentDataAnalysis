@@ -40,7 +40,7 @@ MERGE (c)<-[:COURSE_PROGRAMME {YOS_CODE: TOINTEGER(line.YOS_CODE)}]->(p)
 // Relationship labels cannot be changed, so this would have to be deleted and a new one created
 CREATE (s)-[r:ENROLLED {TERM_CODE: TOINTEGER(line.TERM_CODE)}]->(c)
 SET r.YOS_CODE = TOINTEGER(line.YOS_CODE)
-SET r.ACTIVE = CASE line.PERC WHEN 'n/a' THEN TRUE WHEN '' THEN TRUE ELSE FALSE END;
+SET r.ACTIVE = CASE WHEN NOT line.PERC IS NULL THEN FALSE ELSE TRUE END;
 
 //#####################################################################
 
@@ -55,7 +55,7 @@ SET r.PERC = TOINTEGER(line.PERC);
 
 // Calculate Average marks and assign expected grade for all students
 MATCH (s:Student)-[r:ENROLLED]-(c:Course) WHERE r.ACTIVE = FALSE
-WITH SUM(r.PERC) / COUNT(r) AS average, s // AVG(r.PERC)
+WITH AVG(r.PERC) AS average, s // AVG(r.PERC)
 SET s.DEG_CLASS = CASE WHEN average>=70 THEN "First-class Honours" WHEN average>=60 THEN "Upper Second-class Honours" WHEN average>=50 THEN "Lower Second-class Honours" WHEN average>=40 THEN "Third-class Honours" ELSE "Ordinary Degree" END;
 
 // Set the year of study of a student based on which courses they are enrolled on
@@ -116,28 +116,3 @@ MATCH (c:Course {COURSE_CODE: "F21AD"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE
 MATCH (c:Course {COURSE_CODE: "F21AN"}), (d:Course {COURSE_CODE: "F21CN"}) MERGE (c)-[:PRE_REQUISITE]->(d);
 MATCH (c:Course {COURSE_CODE: "F21CA"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
 MATCH (c:Course {COURSE_CODE: "F21MP"}), (d:Course {COURSE_CODE: "F21RP"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////// UNDER MAINTANANCE
-//#####################################################################
-
-// Once rels have been created, load CSV again and add PERC values to INACTIVE student/course rels
-LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/LookLawson/StudentDataAnnalysis/master/output.csv"
-AS line WITH line, line.ROLL_DATE.split('-') AS date
-MATCH (s:Student)-[r:ENROLLED]-(c:Course)
-WHERE r.ACTIVE = FALSE AND s.BANNER_ID = line.BANNER_ID AND c.COURSE_CODE = line.COURSE_CODE
-SET r.PERC = TOINTEGER(line.PERC),
-	r.OPPORTUNITY = TOINTEGER(line.OPPORTUNITY),
-	r.ROLL_DATE = Date({year: date[2], 
-	month: CASE date[1] WHEN "Jan" THEN 01 WHEN "Feb" THEN 02 WHEN "Mar" THEN 03 WHEN "Apr" THEN 04 WHEN "May" THEN 05 WHEN "Jun" THEN 06 WHEN "Jul" THEN 07 WHEN "Aug" THEN 08 WHEN "Sep" THEN 09 WHEN "Oct" THEN 10 WHEN "Nov" THEN 11 WHEN "Dec" THEN 12 END, 
-	day:date[0]});
