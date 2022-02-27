@@ -129,7 +129,7 @@ RETURN DegreeClassification, ROUND(TOFLOAT(DegCount)/COUNT(s)*100) as DegPercent
 
 
 // [4a4] Grades Distribution [Rounded to 2.5, line chart]
-MATCH (s:Student)-[r:ENROLLED]-(c:Course)
+MATCH (s:Student)-[r:ENROLLED]-(c:Course) WHERE s.ACTIVE_STATUS = FALSE
 WITH ROUND(TOFLOAT(AVG(r.PERC)*0.01)/2.5,2)*250 as average, s
 RETURN DISTINCT average, COUNT(s)
 ORDER BY average
