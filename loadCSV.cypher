@@ -40,9 +40,9 @@ MERGE (c)<-[:COURSE_PROGRAMME {YOS_CODE: TOINTEGER(line.YOS_CODE)}]->(p)
 // Relationship labels cannot be changed, so this would have to be deleted and a new one created
 CREATE (s)-[r:ENROLLED {TERM_CODE: TOINTEGER(line.TERM_CODE)}]->(c)
 SET r.YOS_CODE = TOINTEGER(line.YOS_CODE),
-SET r.OPPORTUNITY = line.OPPORTUNITY,
-SET r.RESIT_FLAG = line.RESIT_FLAG,
-SET r.ACTIVE = CASE WHEN NOT line.PERC IS NULL THEN FALSE ELSE TRUE END;
+	r.OPPORTUNITY = TOINTEGER(line.OPPORTUNITY),
+	r.RESIT_FLAG = line.RESIT_FLAG,
+	r.ACTIVE = CASE WHEN NOT line.PERC IS NULL THEN FALSE ELSE TRUE END;
 
 //#####################################################################
 

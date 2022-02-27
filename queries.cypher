@@ -84,7 +84,7 @@ ORDER BY average
 MATCH (s:Student)-[r:ENROLLED]-(c:Course)
 WITH ROUND(TOFLOAT(AVG(r.PERC)*0.01)/5,2)*500 as average, s
 RETURN DISTINCT average, COUNT(s)
-ORDER BY averageDD
+ORDER BY average
 // [4b] Mark distribution for Student by year
 //MATCH (s:Student) WHERE s.BANNER_ID = $neodash_student_banner_id
 //UNWIND RANGE(1,s.YOS_CODE) as year
@@ -122,3 +122,14 @@ MATCH (s:Student)
 WITH s.DEG_CLASS as DegreeClassification, COUNT(s.DEG_CLASS) as DegCount
 MATCH (s:Student)
 RETURN DegreeClassification, ROUND(TOFLOAT(DegCount)/COUNT(s)*100) as DegPercent
+
+
+
+
+
+
+// [4a4] Grades Distribution [Rounded to 2.5, line chart]
+MATCH (s:Student)-[r:ENROLLED]-(c:Course)
+WITH ROUND(TOFLOAT(AVG(r.PERC)*0.01)/2.5,2)*250 as average, s
+RETURN DISTINCT average, COUNT(s)
+ORDER BY average

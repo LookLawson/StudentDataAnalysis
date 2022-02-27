@@ -16,7 +16,7 @@ currentTerm = 202122
 currentSemester = 2
 
 # Default mark distribution for 1st, 2:1, 2:2, and 3rd class degrees. (See random.choices() weight parameter)
-markDistribution = [1.5, 2, 1, 0.5]
+markDistribution = [1.5, 2, 1, 0.5, 0.25]
 # Troublesome programmes and courses in XLSX dataset are removed as they are not within the project scope.
 bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "elect", "or ele"]
 
@@ -106,7 +106,7 @@ class Student:
         self.ACTIVE_COURSES = []
         self.COMPLETED_COURSES = []
         # Establish what degree class a student is upon creation to generate marks accordingly.
-        self.EXPECTED_DEG_CLASS = random.choices([1, 2.1, 2.2, 3], weights=markDistribution)[0]
+        self.EXPECTED_DEG_CLASS = random.choices([1, 2.1, 2.2, 3, 4], weights=markDistribution)[0]
 
         self.__genPersonalInfo(f)
         self.__genCourseInfo()
@@ -244,16 +244,22 @@ class Student:
     # back in second year due to building bad habits for university study or burnout.
     def __generateMark(self, course):
         deg = self.EXPECTED_DEG_CLASS
-        margin = 6
+        margin = 3
         year = findYearForCourse(self.PROG_CODE, course)
         if deg == 1:
-            mark = random.randrange(70-margin, 80+margin)
+            # 1st class students have a 1/5 chance of getting 90+
+            if random.randrange(1, 5) == 1:
+                mark = random.randrange(90, 100)
+            else:
+                mark = random.randrange(70-margin, 80+margin)
         elif deg == 2.1:
             mark = random.randrange(60-margin, 70+margin)
         elif deg == 2.2:
             mark = random.randrange(50-margin, 60+margin)
         elif deg == 3:
             mark = random.randrange(40-margin, 50+margin)
+        elif deg == 4:
+            mark = random.randrange(10-margin, 40+margin)
         else:
             mark = 0
 
