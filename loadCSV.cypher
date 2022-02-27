@@ -21,7 +21,7 @@ SET s.TITLE = line.TITLE,
 	s.ACTIVE_STATUS = CASE WHEN line.ACTIVE_STATUS = "AS" THEN TRUE ELSE FALSE END,
 	s.LEVL_CODE = line.LEVL_CODE,
 	s.CAMP_DESC = line.CAMP_DESC,
-	// s.TERM_CODE = TOINTEGER(line.TERM_CODE),
+	// s.TERM_CODE = TOINTEGER(line.TERM_CODE), // Defunct, properties assigned to [ENROLLED] relationship
 	// s.YOS_CODE = TOINTEGER(line.YOS_CODE),
 	s.USERNAME = line.USERNAME,
 	s.CAMP_CODE = line.CAMP_CODE
@@ -34,10 +34,11 @@ MERGE (c:Course {COURSE_CODE: line.COURSE_CODE})
 SET c.COURSE_TITLE = line.COURSE_TITLE,
 	c.CREDIT_HOURS = TOFLOAT(line.CREDIT_HOURS),
 	c.PTRM = TOINTEGER(RIGHT(line.PTRM,1)) // Take rightmost character so it works for "2" and "S2"
-//Create Relationships
+//Create Student--Programme Relationships
 MERGE (s)-[:ON_PROGRAMME]->(p)
+// Create Course--Programme Relationships
 MERGE (c)<-[:COURSE_PROGRAMME {YOS_CODE: TOINTEGER(line.YOS_CODE)}]->(p)
-// Relationship labels cannot be changed, so this would have to be deleted and a new one created
+// Create Student--Course relationship
 CREATE (s)-[r:ENROLLED {TERM_CODE: TOINTEGER(line.TERM_CODE)}]->(c)
 SET r.YOS_CODE = TOINTEGER(line.YOS_CODE),
 	r.OPPORTUNITY = TOINTEGER(line.OPPORTUNITY),
