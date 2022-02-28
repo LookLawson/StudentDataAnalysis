@@ -20,7 +20,7 @@ markDistribution = [1.5, 2, 1, 0.5, 0.25]
 # Troublesome programmes and courses in XLSX dataset are removed as they are not within the project scope.
 bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "elect", "or ele"]
 
-FLAG_SECOND_YEAR_SLUMP = False
+FLAG_SECOND_YEAR_SLUMP = True
 FACTOR_SECOND_YEAR_SLUMP = 0.2
 FREQUENCY_SECOND_YEAR_SLUMP = [1, 2, 3]  # Probability is equal to 1 / len(FREQUENCY)
 
@@ -244,7 +244,7 @@ class Student:
     # back in second year due to building bad habits for university study or burnout.
     def __generateMark(self, course):
         deg = self.EXPECTED_DEG_CLASS
-        margin = 10
+        margin = 7
         year = findYearForCourse(self.PROG_CODE, course)
         if deg == 1:
             # 1st class students have a 1/5 chance of getting 90+
