@@ -263,6 +263,7 @@ class Student:
         else:
             mark = 0
 
+        # Apply Second Year Slump factor to first and second year marks for some students
         if FLAG_SECOND_YEAR_SLUMP and random.choice(FREQUENCY_SECOND_YEAR_SLUMP) == 1:
             if year == 1:
                 mark += mark * FACTOR_SECOND_YEAR_SLUMP

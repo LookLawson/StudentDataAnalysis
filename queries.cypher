@@ -78,12 +78,12 @@ ORDER BY DegPercent
 // [4a2] Grades Distribution [Rounded to 1, line chart]
 MATCH (s:Student)-[r:ENROLLED]-(c:Course)
 WITH ROUND(ROUND(AVG(r.PERC)*0.01,2)*100) as average, s
-RETURN DISTINCT average, COUNT(s)
+RETURN average, COUNT(s)
 ORDER BY average
 // [4a3] Grades Distribution [Rounded to 5, line chart]
 MATCH (s:Student)-[r:ENROLLED]-(c:Course)
 WITH ROUND(TOFLOAT(AVG(r.PERC)*0.01)/5,2)*500 as average, s
-RETURN DISTINCT average, COUNT(s)
+RETURN average, COUNT(s)
 ORDER BY average
 // [4b] Mark distribution for Student by year
 //MATCH (s:Student) WHERE s.BANNER_ID = $neodash_student_banner_id
@@ -118,18 +118,58 @@ ORDER BY average
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-MATCH (s:Student)
-WITH s.DEG_CLASS as DegreeClassification, COUNT(s.DEG_CLASS) as DegCount
-MATCH (s:Student)
-RETURN DegreeClassification, ROUND(TOFLOAT(DegCount)/COUNT(s)*100) as DegPercent
+[GRAPH]
+// OBJECTIVE: Heatmap style graph pattern showing how linked failing one course leads to failing another
+MATCH ()-[r:CORRELATED_FAILS]-() DELETE r;
+// Matches pairs of courses a single student has failed both of, creates weighted relationship between them.
+MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
+WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.PERC < 40 AND r2.PERC < 40
+AND (r1.YOS_CODE < r2.YOS_CODE OR (r1.YOS_CODE = r2.YOS_CODE AND c1.PTRM < c2.PTRM))
+WITH c1, c2, r1, r2
+MERGE (c1)-[f:CORRELATED_FAILS]->(c2)
+	ON CREATE SET f.COUNT = 1
+	ON MATCH SET f.COUNT = f.COUNT + 1;
+// Match course correlated fails relationships 
+MATCH (c1:Course)-[r:CORRELATED_FAILS]-(c2:Course)
+WHERE r.COUNT > 40
+RETURN c1,c2,r ORDER BY r.COUNT DESC
+
+// Match correlated fail relationship of high percentage
+MATCH (c1:Course)-[r:CORRELATED_FAILS]-(c2:Course)
+WHERE r.COUNT > 10
+WITH c1, c2, r, r.COUNT as FailCount
+MATCH (c1)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2)
+WHERE r1.PERC < 40
+WITH c1,c2, r, FailCount, Count(s) as Total
+RETURN c1, c2, r, Total, FailCount, ROUND((TOFLOAT(FailCount)/Total)*100,1) as Percent
+ORDER BY Percent DESC
 
 
 
 
 
-
-// [4a4] Grades Distribution [Rounded to 2.5, line chart]
-MATCH (s:Student)-[r:ENROLLED]-(c:Course) WHERE s.ACTIVE_STATUS = FALSE
-WITH ROUND(TOFLOAT(AVG(r.PERC)*0.01)/2.5,2)*250 as average, s
-RETURN DISTINCT average, COUNT(s)
-ORDER BY average
+// Test Data Creation
+MATCH (s:Student) DETACH DELETE s;
+UNWIND RANGE(1,100) as i
+CREATE (s:Student {BANNER_ID: i});
+// Over 50s fail F27PX
+MATCH (s:Student), (c:Course {COURSE_CODE: "F27PX"})
+MERGE (s)-[r:ENROLLED]-(c)
+SET r.ACTIVE = FALSE, r.YOS_CODE = 2,
+	r.PERC = CASE WHEN s.BANNER_ID > 50 THEN 20 ELSE 60 END;
+// Under 50s fail F28PL
+MATCH (s:Student), (c:Course {COURSE_CODE: "F28PL"})
+MERGE (s)-[r:ENROLLED]-(c)
+SET r.ACTIVE = FALSE, r.YOS_CODE = 2,
+	r.PERC = CASE WHEN s.BANNER_ID <= 50 THEN 20 ELSE 60 END;
+// Under 30s fail F29LP
+MATCH (s:Student), (c:Course {COURSE_CODE: "F29LP"})
+MERGE (s)-[r:ENROLLED]-(c)
+SET r.ACTIVE = FALSE, r.YOS_CODE = 3,
+	r.PERC = CASE WHEN s.BANNER_ID <= 30 THEN 20 ELSE 60 END;
+// 30-80 fail F2SO
+MATCH (s:Student), (c:Course {COURSE_CODE: "F29SO"})
+MERGE (s)-[r:ENROLLED]-(c)
+SET r.ACTIVE = FALSE, r.YOS_CODE = 3,
+	r.PERC = CASE WHEN s.BANNER_ID <= 80 AND s.BANNER_ID > 30 THEN 20 ELSE 60 END;
+	

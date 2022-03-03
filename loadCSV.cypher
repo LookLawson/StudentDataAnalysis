@@ -71,6 +71,16 @@ MATCH (c:Course)-[r:COURSE_PROGRAMME]-(p:Programme)
 WITH MAX(r.YOS_CODE) as YOS_CODE, p
 SET p.PROG_DURATION = TOINTEGER(YOS_CODE);
 
+// Matches pairs of courses a single student has failed both of, creates weighted relationship between them.
+MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
+WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.PERC < 40 AND r2.PERC < 40
+AND (r1.YOS_CODE < r2.YOS_CODE OR (r1.YOS_CODE = r2.YOS_CODE AND c1.PTRM < c2.PTRM))
+WITH c1, c2, r1, r2
+MERGE (c1)-[f:CORRELATED_FAILS]->(c2)
+	ON CREATE SET f.COUNT = 1
+	ON MATCH SET f.COUNT = f.COUNT + 1;
+
+
 
 // Manually add Pre-requisite course relationships (Computer Science Courses)
 MATCH (c:Course {COURSE_CODE: "F28ED"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE (c)-[:PRE_REQUISITE]->(d);
