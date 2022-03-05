@@ -1,0 +1,128 @@
+<head>
+    <style> body { margin: 0; } </style>
+
+    <script src="//unpkg.com/3d-force-graph"></script>
+    <script src="https://unpkg.com/neo4j-driver"></script>
+    <script src=neo4j-driver-core/lib/record.js'></script>
+    <!--<script src="../../dist/3d-force-graph.js"></script>-->
+</head>
+
+<body>
+<div id="3d-graph"></div>
+
+<script>
+
+    // Neo4J Session API - Connects to the database , runs the specified query and stores the result in
+    const elem = document.getElementById('3d-graph');
+    const driver = neo4j.driver("neo4j://ad82a3d6.databases.neo4j.io", neo4j.auth.basic("neo4j", "C3m05Hb74vGbCUL9KWrJQkWl2kT1AnlpvNbOScDLOS4"),{encrypted: true});
+    const session = driver.session();
+    const start = new Date();
+
+    // Runs the cypher query and stored the resulting nodes and edges into run-time data structures
+    async function getGraph() {
+        try {
+            const result = await session.readTransaction(tx =>
+                tx.run('MATCH (p:Programme)-[cpr1:ON_PROGRAMME]-(c1:Course)-[r:CORRELATED_FAILS]-(c2:Course)-[cpr2:ON_PROGRAMME]-(p)-[psr:PART_OF]-(s:School) ' +
+                    'WHERE r.PERC_FAIL > 80 ' +
+                    'RETURN {id:id(c1), label:head(labels(c1))} as c1,' +
+                    '{id:id(c2), label:head(labels(c2))} as c2,' +
+                    '{id:id(p), label:head(labels(p))} as p, ' +
+                    '{id:id(s), label:head(labels(s))} as s, ' +
+                    '{id:id(r), label:TYPE(r), source:id(STARTNODE(r)), target:id(ENDNODE(r)), perc:r.perc} as CORRELATED_FAILS, ' +
+                    '{id:id(cpr1), label:TYPE(cpr1), source:id(STARTNODE(cpr1)), target:id(ENDNODE(cpr1))} as COURSE_PROGRAMME1, ' +
+                    '{id:id(cpr2), label:TYPE(cpr2), source:id(STARTNODE(cpr2)), target:id(ENDNODE(cpr2))} as COURSE_PROGRAMME2, ' +
+                    '{id:id(psr), label:TYPE(psr), source:id(STARTNODE(psr)), target:id(ENDNODE(psr))} as PART_OF')
+            )
+
+            const records = result.records
+            for (let i = 0; i < records.length; i++) {
+                for (const k in records[i].keys) {
+                    const fields = Object.keys(records[i].get(records[i].keys[k]));
+
+                    const element = records[i].keys[k]
+                    //console.log(element); // The name of the element in the row
+                    //console.log(records[i]); // The whole damn row
+
+                    // Cast all the id properties into the compatible Number data type
+                    for (const m in fields) {
+                        if (fields[m] === "id") {
+                            const x = records[i].get(element);
+                            x.id = x.id.toNumber();
+                        } else if (fields[m] === "source") {
+                            const x = records[i].get(element);
+                            x.source = x.source.toNumber();
+                        } else if (fields[m] === "target") {
+                            const x = records[i].get(element);
+                            x.target = x.target.toNumber();
+                        }
+                    }
+                    // TODO: Automatically iterate through nodes and relationships and populate the dictionaries
+                    // Check the type (node or relationship) - Nodes have labels, relationships have types
+                    if (records[i].get(element).hasOwnProperty("label")) {
+                        //is node
+                    } else if (records[i].get(element).hasOwnProperty("type")) {
+                        // is relationship
+                    }
+
+
+                }
+
+                // Add each node type to the set of nodes
+                let c1 = records[i].get("c1");
+                let c2 = records[i].get("c2");
+                let p = records[i].get("p");
+                let s = records[i].get("s");
+                nodeDic[c1.id] = c1;
+                nodeDic[c2.id] = c2;
+                nodeDic[p.id] = p;
+                nodeDic[s.id] = s;
+
+
+                // Add each type of relationship to the set of relationships
+                let correlated_fails = records[i].get("CORRELATED_FAILS");
+                let course_programme1 = records[i].get("COURSE_PROGRAMME1");
+                let course_programme2 = records[i].get("COURSE_PROGRAMME2");
+                let part_of = records[i].get("PART_OF");
+                linkDic[correlated_fails.id] = correlated_fails;
+                linkDic[course_programme1.id] = course_programme1;
+                linkDic[course_programme2.id] = course_programme2;
+                linkDic[part_of.id] = part_of;
+
+            }
+        } finally {
+            await session.close()
+            console.log(Object.keys(nodeDic).length +" nodes and "+Object.keys(linkDic).length +" links loaded in loaded in "+(new Date()-start)+" ms.")
+        }
+    }
+
+    async function forceGraph() {
+        // Fetch and await the results of the Neo4j Database Query
+        await getGraph();
+        // Populate the array for nodes and links with the values of the dictionaries
+        const nodes = Array.from(Object.values(nodeDic))
+        const links = Array.from(Object.values(linkDic))
+
+        const gData = {nodes, links};
+        const Graph = ForceGraph3D()
+        (document.getElementById('3d-graph'))
+            .graphData(gData)
+            .nodeAutoColorBy('label')
+            .nodeLabel(node => node.id)
+            .nodeOpacity(1)
+            .linkOpacity(0.9) // Seems to be universal value. Doesn't take a function, so cannot parameterize opacity
+            //.linkOpacity(link => link.hasOwnProperty('perc') ? 1 : 0)
+            .linkWidth(link => link.hasOwnProperty('perc') ? 2 : 0.2 )
+            .linkColor(link => link.label === 'CORRELATED_FAILS' ? 'blue' : 'grey')
+            .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null);
+    }
+
+    // Create dictionaries that will store unique Node and Relationship ID's and associate them with their object
+    let nodeDic = {};
+    let linkDic = {};
+    forceGraph();
+
+
+</script>
+</body>
+
+

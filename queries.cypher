@@ -144,8 +144,16 @@ WITH c1,c2, r, FailCount, Count(s) as Total
 RETURN c1, c2, r, Total, FailCount, ROUND((TOFLOAT(FailCount)/Total)*100,1) as Percent
 ORDER BY Percent DESC
 
-
-
+// Add percentage to relationship weight
+MATCH (c1:Course)-[r:CORRELATED_FAILS]-(c2:Course)
+WHERE r.COUNT > 10 // Threshold to discount minimal data count
+WITH c1, c2, r, r.COUNT as FailCount
+MATCH (c1)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2)
+WHERE r1.PERC < 40
+WITH c1,c2, r, FailCount, Count(s) as Total
+WITH c1, c2, r, Total, FailCount, ROUND((TOFLOAT(FailCount)/Total)*100,1) as Percent
+MATCH (c1)-[r]-(c2) 
+SET r.PERC_FAIL = Percent
 
 
 // Test Data Creation

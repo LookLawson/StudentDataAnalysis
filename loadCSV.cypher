@@ -2,11 +2,13 @@
 DROP CONSTRAINT ON(s:Student) ASSERT s.BANNER_ID IS UNIQUE;
 DROP CONSTRAINT ON(p:Programme) ASSERT p.PROG_CODE IS UNIQUE;
 DROP CONSTRAINT ON(c:Course) ASSERT c.COURSE_CODE IS UNIQUE;
+DROP CONSTRAINT ON(s:School) ASSERT s.NAME IS UNIQUE;
 MATCH(n) DETACH DELETE n;
 // To delete constraints, replace CREATE with DROP, then DROP INDEX ON
 CREATE CONSTRAINT ON(s:Student) ASSERT s.BANNER_ID IS UNIQUE;
 CREATE CONSTRAINT ON(p:Programme) ASSERT p.PROG_CODE IS UNIQUE;
 CREATE CONSTRAINT ON(c:Course) ASSERT c.COURSE_CODE IS UNIQUE;
+CREATE CONSTRAINT ON(s:School) ASSERT s.NAME IS UNIQUE;
 //#####################################################################
 
 // CSV LOAD
@@ -37,7 +39,7 @@ SET c.COURSE_TITLE = line.COURSE_TITLE,
 //Create Student--Programme Relationships
 MERGE (s)-[:ON_PROGRAMME]->(p)
 // Create Course--Programme Relationships
-MERGE (c)<-[:COURSE_PROGRAMME {YOS_CODE: TOINTEGER(line.YOS_CODE)}]->(p)
+MERGE (c)-[:ON_PROGRAMME {YOS_CODE: TOINTEGER(line.YOS_CODE)}]->(p)
 // Create Student--Course relationship
 CREATE (s)-[r:ENROLLED {TERM_CODE: TOINTEGER(line.TERM_CODE)}]->(c)
 SET r.YOS_CODE = TOINTEGER(line.YOS_CODE),
@@ -79,8 +81,22 @@ WITH c1, c2, r1, r2
 MERGE (c1)-[f:CORRELATED_FAILS]->(c2)
 	ON CREATE SET f.COUNT = 1
 	ON MATCH SET f.COUNT = f.COUNT + 1;
+	
+// Add percentage to relationship weight
+MATCH (c1:Course)-[r:CORRELATED_FAILS]-(c2:Course)
+WHERE r.COUNT > 10 // Threshold to discount minimal data count
+WITH c1, c2, r, r.COUNT as FailCount
+MATCH (c1)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2)
+WHERE r1.PERC < 40
+WITH c1,c2, r, FailCount, Count(s) as Total
+WITH c1, c2, r, Total, FailCount, ROUND((TOFLOAT(FailCount)/Total)*100,1) as Percent
+MATCH (c1)-[r]-(c2) 
+SET r.PERC_FAIL = Percent;
 
-
+// Create a relationship between every programme and its School (Currently Only MACS)
+CREATE (s:School {NAME: "MACS"});
+MATCH (p:Programme), (s:School) WHERE s.NAME = "MACS"
+MERGE (p)-[:PART_OF]-(s);
 
 // Manually add Pre-requisite course relationships (Computer Science Courses)
 MATCH (c:Course {COURSE_CODE: "F28ED"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE (c)-[:PRE_REQUISITE]->(d);
@@ -129,3 +145,5 @@ MATCH (c:Course {COURSE_CODE: "F21AD"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE
 MATCH (c:Course {COURSE_CODE: "F21AN"}), (d:Course {COURSE_CODE: "F21CN"}) MERGE (c)-[:PRE_REQUISITE]->(d);
 MATCH (c:Course {COURSE_CODE: "F21CA"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
 MATCH (c:Course {COURSE_CODE: "F21MP"}), (d:Course {COURSE_CODE: "F21RP"}) MERGE (c)-[:PRE_REQUISITE]->(d);
+
+
