@@ -69,7 +69,7 @@ WITH MAX(r.YOS_CODE) as YOS_CODE, s
 SET s.YOS_CODE = TOINTEGER(YOS_CODE);
 
 // Set the length of a programme based on the maximum year code of a course that is associated with it
-MATCH (c:Course)-[r:COURSE_PROGRAMME]-(p:Programme)
+MATCH (c:Course)-[r:ON_PROGRAMME]-(p:Programme)
 WITH MAX(r.YOS_CODE) as YOS_CODE, p
 SET p.PROG_DURATION = TOINTEGER(YOS_CODE);
 
