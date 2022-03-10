@@ -146,7 +146,7 @@ ORDER BY Percent DESC
 
 // Add percentage to relationship weight
 MATCH (c1:Course)-[r:CORRELATED_FAILS]-(c2:Course)
-WHERE r.COUNT > 10 // Threshold to discount minimal data count
+//WHERE r.COUNT > 10 // Threshold to discount minimal data count
 WITH c1, c2, r, r.COUNT as FailCount
 MATCH (c1)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2)
 WHERE r1.PERC < 40

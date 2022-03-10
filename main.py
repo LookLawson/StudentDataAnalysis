@@ -11,7 +11,7 @@ from faker import Faker
 from pathlib import Path
 
 # region Variables
-studentCount = 2000
+studentCount = 100
 currentTerm = 202122
 currentSemester = 2
 
@@ -24,7 +24,7 @@ FLAG_SECOND_YEAR_SLUMP = True
 FACTOR_SECOND_YEAR_SLUMP = 0.2
 FREQUENCY_SECOND_YEAR_SLUMP = [1, 2, 3]  # Probability is equal to 1 / len(FREQUENCY)
 
-FLAG_INACTIVE_STUDENTS = True
+FLAG_INACTIVE_STUDENTS = False
 YEAR_COUNT_INACTIVE_STUDENTS = 1  # Maximum value is 17, Value of 1 will allow inactive students from up to 5 years ago
 
 # Keep track of generated ID's to ensure uniqueness
@@ -107,6 +107,7 @@ class Student:
         self.COMPLETED_COURSES = []
         # Establish what degree class a student is upon creation to generate marks accordingly.
         self.EXPECTED_DEG_CLASS = random.choices([1, 2.1, 2.2, 3, 4], weights=markDistribution)[0]
+        self.SLUMPER = random.choice(FREQUENCY_SECOND_YEAR_SLUMP) == 1
 
         self.__genPersonalInfo(f)
         self.__genCourseInfo()
@@ -264,7 +265,7 @@ class Student:
             mark = 0
 
         # Apply Second Year Slump factor to first and second year marks for some students
-        if FLAG_SECOND_YEAR_SLUMP and random.choice(FREQUENCY_SECOND_YEAR_SLUMP) == 1:
+        if FLAG_SECOND_YEAR_SLUMP and self.SLUMPER:
             if year == 1:
                 mark += mark * FACTOR_SECOND_YEAR_SLUMP
             elif year == 2:
