@@ -24,7 +24,7 @@ FLAG_SECOND_YEAR_SLUMP = True
 FACTOR_SECOND_YEAR_SLUMP = 0.2
 FREQUENCY_SECOND_YEAR_SLUMP = [1, 2, 3]  # Probability is equal to 1 / len(FREQUENCY)
 
-FLAG_INACTIVE_STUDENTS = False
+FLAG_INACTIVE_STUDENTS = True
 YEAR_COUNT_INACTIVE_STUDENTS = 1  # Maximum value is 17, Value of 1 will allow inactive students from up to 5 years ago
 
 # Keep track of generated ID's to ensure uniqueness
