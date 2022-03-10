@@ -11,7 +11,7 @@ from faker import Faker
 from pathlib import Path
 
 # region Variables
-studentCount = 100
+studentCount = 1000
 currentTerm = 202122
 currentSemester = 2
 
