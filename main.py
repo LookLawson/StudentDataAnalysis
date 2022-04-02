@@ -15,16 +15,16 @@ studentCount = 1000
 currentTerm = 202122
 currentSemester = 2
 
-# Default mark distribution for 1st, 2:1, 2:2, and 3rd class degrees. (See random.choices() weight parameter)
-markDistribution = [1.5, 2, 1, 0.5, 0.25]
+# Default mark distribution for 1st, 2:1, 2:2, 3rd, and Ord class degrees. (See random.choices() weight parameter)
+markDistribution = [35, 40, 20, 4, 1]
 # Troublesome programmes and courses in XLSX dataset are removed as they are not within the project scope.
 bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "elect", "or ele"]
 
-FLAG_SECOND_YEAR_SLUMP = True
-FACTOR_SECOND_YEAR_SLUMP = 0.2
-FREQUENCY_SECOND_YEAR_SLUMP = [1, 2, 3]  # Probability is equal to 1 / len(FREQUENCY)
+FLAG_SECOND_YEAR_SLUMP = False
+FACTOR_SECOND_YEAR_SLUMP = 0.3
+FREQUENCY_SECOND_YEAR_SLUMP = [1, 2]  # Probability is equal to 1 / len(FREQUENCY)
 
-FLAG_INACTIVE_STUDENTS = True
+FLAG_INACTIVE_STUDENTS = False
 YEAR_COUNT_INACTIVE_STUDENTS = 1  # Maximum value is 17, Value of 1 will allow inactive students from up to 5 years ago
 
 # Keep track of generated ID's to ensure uniqueness
@@ -245,7 +245,7 @@ class Student:
     # back in second year due to building bad habits for university study or burnout.
     def __generateMark(self, course):
         deg = self.EXPECTED_DEG_CLASS
-        margin = 7
+        margin = 4
         year = findYearForCourse(self.PROG_CODE, course)
         if deg == 1:
             # 1st class students have a 1/5 chance of getting 90+

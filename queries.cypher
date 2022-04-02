@@ -1,16 +1,25 @@
 
 // Question 1 
+
 // [1a] Show average marks per year per programme [Bar Chart]
 MATCH (p:Programme)
 WITH p, RANGE(1,p.PROG_DURATION) as years
-UNWIND years as year
-MATCH (:Student)-[r:ENROLLED]->(:Course)-[:ON_PROGRAMME]-(p)
-WHERE r.YOS_CODE = year AND r.ACTIVE = FALSE 
-RETURN year as Year, ROUND(AVG(r.PERC),2) as Average, p.PROG_DESC as Programme
+UNWIND years as year // For year of study in each programme
+MATCH (p)-[:ON_PROGRAMME]-(:Student)-[r:ENROLLED]->(:Course)
+WHERE r.YOS_CODE = year AND r.ACTIVE = FALSE
+RETURN year as YearOfStudy, ROUND(AVG(r.PERC),2) as AverageGrade, p.PROG_DESC as Programme
+
 // [1b] Show the average change in marks from 1st year to 2nd year
 MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
 WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.YOS_CODE = 1 AND r2.YOS_CODE = 2
 RETURN ROUND(AVG(r2.PERC-r1.PERC),2) as Delta
+
+// [1b] Show the average change in marks from 1st year to 2nd year
+MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
+WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.YOS_CODE = 1 AND r2.YOS_CODE = 2
+RETURN ROUND(AVG(1-(r1.PERC-r2.PERC)),2) as Delta
+
+
 // [1c1] Quantify the amount of students that drop beyond a $thresholperc change.
 MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
 WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.YOS_CODE = 1 AND r2.YOS_CODE = 2
@@ -97,7 +106,7 @@ WHERE s.BANNER_ID = $neodash_student_banner_id AND r.ACTIVE = FALSE
 RETURN c.COURSE_CODE as Course, r.PERC as Mark, r.YOS_CODE as YearofStudy
 ORDER BY YearofStudy
 // [4c] Degree Classification percentage by Programme
-MATCH (p:Programme)-[r1:ON_PROGRAMME]-(s:Student)-[r2:ENROLLED]-(c:Course)-[r3:COURSE_PROGRAMME]-(p)
+MATCH (p:Programme)-[r1:ON_PROGRAMME]-(s:Student)-[r2:ENROLLED]-(c:Course)-[r3:ON_PROGRAMME]-(p)
 WHERE p.PROG_CODE = $neodash_programme_prog_code AND s.ACTIVE_STATUS = FALSE
 WITH DISTINCT s.DEG_CLASS as degs, p, s
 UNWIND degs as deg
