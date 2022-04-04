@@ -1,32 +1,55 @@
 
-// Question 1 
+// Second Year Slump question
 
-// [1a] Show average marks per year per programme [Bar Chart]
+// [1a1] Show average marks per year per programme [Bar Chart]
 MATCH (p:Programme)
 WITH p, RANGE(1,p.PROG_DURATION) as years
 UNWIND years as year // For year of study in each programme
 MATCH (p)-[:ON_PROGRAMME]-(:Student)-[r:ENROLLED]->(:Course)
 WHERE r.YOS_CODE = year AND r.ACTIVE = FALSE
 RETURN year as YearOfStudy, ROUND(AVG(r.PERC),2) as AverageGrade, p.PROG_DESC as Programme
+// [1a2] Show the average change in marks from 1st year to 2nd year
+MATCH (s:Student)-[r:ENROLLED]-(:Course)
+WHERE r.ACTIVE = FALSE AND r.YOS_CODE = 1
+WITH AVG(r.PERC) as Year1Avg, s
+MATCH (s)-[r:ENROLLED]-(:Course)
+WHERE r.ACTIVE = FALSE AND r.YOS_CODE = 2
+WITH AVG(r.PERC)-Year1Avg as Delta, s
+RETURN ROUND(AVG(Delta),2) as AverageDelta
+// [1a2] Show the median change in marks from 1st year to 2nd year
+MATCH (s:Student)-[r:ENROLLED]-(:Course)
+WHERE r.ACTIVE = FALSE AND r.YOS_CODE = 1
+WITH AVG(r.PERC) as Year1Avg, s
+MATCH (p:Programme)-[:ON_PROGRAMME]-(s)-[r:ENROLLED]-(:Course)
+WHERE r.ACTIVE = FALSE AND r.YOS_CODE = 2
+WITH ROUND(AVG(r.PERC)-Year1Avg,2) as Delta, s, p.PROG_DESC as Programme
+ORDER BY Delta
+RETURN percentileCont(Delta, 0.5) as MedianDelta
+	,Programme
 
-// [1b] Show the average change in marks from 1st year to 2nd year
-MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
-WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.YOS_CODE = 1 AND r2.YOS_CODE = 2
-RETURN ROUND(AVG(r2.PERC-r1.PERC),2) as Delta
-
-// [1b] Show the average change in marks from 1st year to 2nd year
-MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
-WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.YOS_CODE = 1 AND r2.YOS_CODE = 2
-RETURN ROUND(AVG(1-(r1.PERC-r2.PERC)),2) as Delta
-
-
-// [1c1] Quantify the amount of students that drop beyond a $thresholperc change.
-MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
-WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.YOS_CODE = 1 AND r2.YOS_CODE = 2
-WITH (1 - ROUND(AVG(r2.PERC)/AVG(r1.PERC),2)) as Delta, s, TOFLOAT($neodash_thresholdperc) as thresh
-WITH COUNT(CASE WHEN Delta >= thresh THEN Delta END) AS SlumpCount
-MATCH (s:Student) WHERE s.YOS_CODE > 2
-RETURN TOFLOAT($neodash_thresholdperc)*100 + "%" as Threshold, SlumpCount, COUNT(s) as StudentsInSet, ROUND(TOFLOAT(SlumpCount)/COUNT(s) * 100,2) + "%" as PercentSlumped
+// [1b1] Quantify the amount of students that drop beyond an percentage change.
+MATCH (s:Student)-[r:ENROLLED]-(:Course)
+WHERE r.ACTIVE = FALSE AND r.YOS_CODE = 1
+WITH AVG(r.PERC) as Year1Avg, s
+MATCH (s)-[r:ENROLLED]-(:Course)
+WHERE r.ACTIVE = FALSE AND r.YOS_CODE = 2
+WITH (1 - AVG(r.PERC)/Year1Avg) as DeltaPerc, s, TOFLOAT($neodash_thresholdperc) as thresh
+WITH COUNT(CASE WHEN DeltaPerc >= thresh THEN DeltaPerc END) AS SlumpCount, COUNT(s) as TotalCount, thresh
+RETURN thresh*100 + "%" as Threshold, SlumpCount, TotalCount, 
+	ROUND(TOFLOAT(SlumpCount)/TotalCount * 100,2) + "%" as PercentSlumped
+// [1b2] Quantify the amount of students that drop beyond an integer change.
+MATCH (s:Student)-[r:ENROLLED]-(:Course)
+WHERE r.ACTIVE = FALSE AND r.YOS_CODE = 1
+WITH AVG(r.PERC) as Year1Avg, s
+MATCH (s)-[r:ENROLLED]-(:Course)
+WHERE r.ACTIVE = FALSE AND r.YOS_CODE = 2
+WITH ROUND(AVG(r.PERC)-Year1Avg,2) as Delta, s, TOFLOAT($neodash_thresholdint) as thresh
+WITH COUNT(CASE WHEN -Delta >= thresh THEN Delta END) AS SlumpCount, COUNT(s) as TotalCount, thresh
+RETURN thresh + " marks" as Threshold, SlumpCount, TotalCount, 
+	ROUND(TOFLOAT(SlumpCount)/TotalCount * 100,2) + "%" as PercentSlumped
+	
+	
+	
 // [1c2] Quantify the amount of students that drop beyond a $thresholdint change.	
 MATCH (c1:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(c2:Course)
 WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE AND r1.YOS_CODE = 1 AND r2.YOS_CODE = 2
@@ -42,12 +65,11 @@ RETURN $neodash_thresholdint + " Marks" as Threshold, SlumpCount, COUNT(s) as St
 
 // Question 2 
 // [2a] Average difference between a students grades in a course and its prerequisite course [Bar Chart]
-MATCH (c:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(pc:Course)<-[:PRE_REQUISITE]-(c)
+MATCH (c:Course)-[r1:ENROLLED]-(s:Student)-[r2:ENROLLED]-(pc:Course)<-[:PREREQUISITE]-(c)
 WHERE r1.ACTIVE = FALSE AND r2.ACTIVE = FALSE
 WITH c.COURSE_CODE + " / " + pc.COURSE_CODE as Course, ROUND(AVG(r1.PERC-r2.PERC),2) as Delta, r1.YOS_CODE + "/" + r2.YOS_CODE as Years
 RETURN Course, Delta, Years
 ORDER BY Delta
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,9 +106,9 @@ WITH s.DEG_CLASS as DegreeClassification, COUNT(s.DEG_CLASS) as DegCount
 MATCH (s:Student)
 RETURN DegreeClassification, ROUND(TOFLOAT(DegCount)/COUNT(s)*100) as DegPercent
 ORDER BY DegPercent
-// [4a2] Grades Distribution [Rounded to 1, line chart]
+// [4a2] Grades Distribution [Rounded to 10, line chart]
 MATCH (s:Student)-[r:ENROLLED]-(c:Course)
-WITH ROUND(ROUND(AVG(r.PERC)*0.01,2)*100) as average, s
+WITH ROUND(TOFLOAT(AVG(r.PERC))*0.01/10,2)*1000 as average, s
 RETURN average, COUNT(s)
 ORDER BY average
 // [4a3] Grades Distribution [Rounded to 5, line chart]

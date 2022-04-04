@@ -20,9 +20,9 @@ markDistribution = [35, 40, 20, 4, 1]
 # Troublesome programmes and courses in XLSX dataset are removed as they are not within the project scope.
 bannedKeywords = ["phd", "mdes", "msc", "diploma", "dubai", "malaysia", "ocean", "+ 1 El", "elect", "or ele"]
 
-FLAG_SECOND_YEAR_SLUMP = False
-FACTOR_SECOND_YEAR_SLUMP = 0.3
-FREQUENCY_SECOND_YEAR_SLUMP = [1, 2]  # Probability is equal to 1 / len(FREQUENCY)
+FLAG_SECOND_YEAR_SLUMP = True
+FACTOR_SECOND_YEAR_SLUMP = 0.2
+FREQUENCY_SECOND_YEAR_SLUMP = [1, 2, 3]  # Probability is equal to 1 / len(FREQUENCY)
 
 FLAG_INACTIVE_STUDENTS = False
 YEAR_COUNT_INACTIVE_STUDENTS = 1  # Maximum value is 17, Value of 1 will allow inactive students from up to 5 years ago
@@ -270,7 +270,7 @@ class Student:
                 mark += mark * FACTOR_SECOND_YEAR_SLUMP
             elif year == 2:
                 mark -= mark * FACTOR_SECOND_YEAR_SLUMP
-        return math.trunc(min(mark, 99))
+        return math.trunc(min(mark, 100))
 
     def getStudentCourses(self, year, semesterIndex):
         courseList = []
@@ -306,7 +306,7 @@ def genUsername(userInitials):
 
 
 def writeCSV(header, studentList):
-    with open("output.csv", "w", newline='') as f:
+    with open("f2(0.2,1div3).csv", "w", newline='') as f:
         writer = csv.writer(f)
         writer.writerow(header)
         for student in studentList:

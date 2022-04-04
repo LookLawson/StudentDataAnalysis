@@ -7,7 +7,7 @@ CREATE CONSTRAINT UniqueCourse IF NOT EXISTS ON(c:Course) ASSERT c.COURSE_CODE I
 //#####################################################################
 
 // Fetch raw CSV data from github and load using inbuilt method.
-LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/LookLawson/StudentDataAnnalysis/master/output.csv"
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/LookLawson/StudentDataAnnalysis/master/f2(0.3,1/2).csv"
 AS line WITH line
 
 // Student node
@@ -53,6 +53,7 @@ MATCH (s:Student)-[r:ENROLLED]-(c:Course) WHERE r.ACTIVE = FALSE
 WITH ROUND(AVG(r.PERC),2) AS average, s
 SET s.DEG_CLASS = CASE WHEN average>=70 THEN "First-class Honours" WHEN average>=60 THEN "Upper Second-class Honours" WHEN average>=50 THEN "Lower Second-class Honours" WHEN average>=40 THEN "Third-class Honours" ELSE "Ordinary Degree" END;
 
+
 // Year of study for each student's programme relationship
 MATCH (s:Student)-[r:ENROLLED]-(c:Course)
 WHERE s.ACTIVE_STATUS = TRUE
@@ -85,56 +86,56 @@ MATCH (c1)-[r]-(c2)
 SET r.PERC_FAIL = Percent;
 
 // Create a relationship between every programme and its School (Currently Only MACS)
-//CREATE (s:School {NAME: "MACS"});
-//MATCH (p:Programme), (s:School) WHERE s.NAME = "MACS"
-//MERGE (p)-[:PART_OF]-(s);
+CREATE (s:School {NAME: "MACS"});
+MATCH (p:Programme), (s:School) WHERE s.NAME = "MACS"
+MERGE (p)-[:PART_OF]-(s);
 
 //#####################################################################
 
 // Manually add Pre-requisite course relationships (Computer Science Courses)
-MATCH (c:Course {COURSE_CODE: "F28ED"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28PL"}), (d:Course {COURSE_CODE: "F27SB"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28PL"}), (d:Course {COURSE_CODE: "F27CS"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28WP"}), (d:Course {COURSE_CODE: "F27WD"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28SD"}), (d:Course {COURSE_CODE: "F27SA"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28DM"}), (d:Course {COURSE_CODE: "F27WD"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28HS"}), (d:Course {COURSE_CODE: "F27CS"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28DA"}), (d:Course {COURSE_CODE: "F27SB"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28CD"}), (d:Course {COURSE_CODE: "F27IS"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28CD"}), (d:Course {COURSE_CODE: "F27WD"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28LL"}), (d:Course {COURSE_CODE: "F27SA"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28LL"}), (d:Course {COURSE_CODE: "F27SB"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28LL"}), (d:Course {COURSE_CODE: "F27CX"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F28SX"}), (d:Course {COURSE_CODE: "F27SA"}) MERGE (c)-[:PRE_REQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28ED"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28PL"}), (d:Course {COURSE_CODE: "F27SB"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28PL"}), (d:Course {COURSE_CODE: "F27CS"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28WP"}), (d:Course {COURSE_CODE: "F27WD"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28SD"}), (d:Course {COURSE_CODE: "F27SA"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28DM"}), (d:Course {COURSE_CODE: "F27WD"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28HS"}), (d:Course {COURSE_CODE: "F27CS"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28DA"}), (d:Course {COURSE_CODE: "F27SB"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28CD"}), (d:Course {COURSE_CODE: "F27IS"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28CD"}), (d:Course {COURSE_CODE: "F27WD"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28LL"}), (d:Course {COURSE_CODE: "F27SA"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28LL"}), (d:Course {COURSE_CODE: "F27SB"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28LL"}), (d:Course {COURSE_CODE: "F27CX"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F28SX"}), (d:Course {COURSE_CODE: "F27SA"}) MERGE (c)-[:PREREQUISITE]->(d);
 
-MATCH (c:Course {COURSE_CODE: "F29DC"}), (d:Course {COURSE_CODE: "F28WP"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F29SO"}), (d:Course {COURSE_CODE: "F28DM"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F29SO"}), (d:Course {COURSE_CODE: "F28SD"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F29FB"}), (d:Course {COURSE_CODE: "F17SC"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F29LP"}), (d:Course {COURSE_CODE: "F28PL"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F29DS"}), (d:Course {COURSE_CODE: "F28IR"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F29NC"}), (d:Course {COURSE_CODE: "F27CX"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F29NC"}), (d:Course {COURSE_CODE: "F28IR"}) MERGE (c)-[:PRE_REQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F29DC"}), (d:Course {COURSE_CODE: "F28WP"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F29SO"}), (d:Course {COURSE_CODE: "F28DM"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F29SO"}), (d:Course {COURSE_CODE: "F28SD"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F29FB"}), (d:Course {COURSE_CODE: "F17SC"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F29LP"}), (d:Course {COURSE_CODE: "F28PL"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F29DS"}), (d:Course {COURSE_CODE: "F28IR"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F29NC"}), (d:Course {COURSE_CODE: "F27CX"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F29NC"}), (d:Course {COURSE_CODE: "F28IR"}) MERGE (c)-[:PREREQUISITE]->(d);
 
-MATCH (c:Course {COURSE_CODE: "F20BC"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20DL"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20IF"}), (d:Course {COURSE_CODE: "F29SO"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20IF"}), (d:Course {COURSE_CODE: "F29PD"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20RO"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20RS"}), (d:Course {COURSE_CODE: "F28SD"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20SA"}), (d:Course {COURSE_CODE: "F17SC"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20AD"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20AN"}), (d:Course {COURSE_CODE: "F29DC"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F20CA"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20BC"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20DL"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20IF"}), (d:Course {COURSE_CODE: "F29SO"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20IF"}), (d:Course {COURSE_CODE: "F29PD"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20RO"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20RS"}), (d:Course {COURSE_CODE: "F28SD"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20SA"}), (d:Course {COURSE_CODE: "F17SC"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20AD"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20AN"}), (d:Course {COURSE_CODE: "F29DC"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F20CA"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PREREQUISITE]->(d);
 
-MATCH (c:Course {COURSE_CODE: "F21BC"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F21DL"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F21IF"}), (d:Course {COURSE_CODE: "F29SO"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F21IF"}), (d:Course {COURSE_CODE: "F29PD"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F21RO"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F21RS"}), (d:Course {COURSE_CODE: "F28SD"}) MERGE (c)-[:PRE_REQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21BC"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21DL"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21IF"}), (d:Course {COURSE_CODE: "F29SO"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21IF"}), (d:Course {COURSE_CODE: "F29PD"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21RO"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21RS"}), (d:Course {COURSE_CODE: "F28SD"}) MERGE (c)-[:PREREQUISITE]->(d);
 
-MATCH (c:Course {COURSE_CODE: "F21AD"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F21AN"}), (d:Course {COURSE_CODE: "F21CN"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F21CA"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PRE_REQUISITE]->(d);
-MATCH (c:Course {COURSE_CODE: "F21MP"}), (d:Course {COURSE_CODE: "F21RP"}) MERGE (c)-[:PRE_REQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21AD"}), (d:Course {COURSE_CODE: "F27ID"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21AN"}), (d:Course {COURSE_CODE: "F21CN"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21CA"}), (d:Course {COURSE_CODE: "F29AI"}) MERGE (c)-[:PREREQUISITE]->(d);
+MATCH (c:Course {COURSE_CODE: "F21MP"}), (d:Course {COURSE_CODE: "F21RP"}) MERGE (c)-[:PREREQUISITE]->(d);
