@@ -4,6 +4,8 @@
     <script src="//unpkg.com/3d-force-graph"></script>
     <script src="https://unpkg.com/neo4j-driver"></script>
     <script src=neo4j-driver-core/lib/record.js'></script>
+    <script src="//unpkg.com/three"></script>
+    <script src="//unpkg.com/three-spritetext"></script>
     <!--<script src="../../dist/3d-force-graph.js"></script>-->
 </head>
 
@@ -66,7 +68,8 @@
                 }
             }
         } finally {
-            await session.close()
+            await session.close();
+            setSize("Course", "CORRELATED_FAILS")
             console.log(Object.keys(nodeDic).length +" nodes and "+Object.keys(linkDic).length +" links loaded in loaded in "+(new Date()-start)+" ms.")
         }
     }
@@ -83,7 +86,9 @@
         (document.getElementById('3d-graph'))
             // General graph Settings
             .graphData(gData)
+            .backgroundColor('#002020')
             .nodeAutoColorBy('labels')
+            .nodeVal(node => node.size)
 
             // Node data settings
             .nodeLabel(node => node.labels === "Course" ? `${node.labels}: ${node.COURSE_CODE}` :
@@ -92,40 +97,60 @@
                         node.labels === "Student" ? `${node.labels}: ${node.BANNER_ID}` : `${node.labels}`)
 
             // Link data settings
-            .linkLabel(link => link.type === "CORRELATED_FAILS" ? `${link.type.toLowerCase()}: ${link.PERC_FAIL}%` : link.type.toLowerCase())
+            .linkLabel(link => link.type === "CORRELATED_FAILS" ? `${link.type.toLowerCase()}: ${link.PERC_FAIL}% (n=${link.COUNT})` :
+                link.type === "ON_PROGRAMME" ? `${link.type.toLowerCase()}: Y${link.YOS_CODE}` :
+                    link.type === "PREREQUISITE" ? `${link.type.toLowerCase()}: ${link.DELTA}d` :
+                        link.type.toLowerCase())
 
             // Node visual settings
+            .nodeRelSize(3)
             .nodeOpacity(1)
             .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+            .nodeThreeObjectExtend(true) //Draw nodes and node text together
+            .nodeThreeObject(node => {
+                const sprite = new SpriteText( node.labels === "Course" ? "                " + node.COURSE_CODE : node.id);
+                sprite.material.depthWrite = false; // make sprite background transparent
+                sprite.color = "white";
+                sprite.textHeight = 8;
+                return sprite;
+            })
 
             // Link visual settings
-            .linkOpacity(1) // Seems to be universal value. Doesn't take a function, so cannot parameterize opacity. Use linkColor with an alpha value in colour for dynamic opacity
+            .linkOpacity(1) // Universal value. Doesn't take an accessor function. Use linkColor with an alpha value in colour for dynamic instance opacity
             //.linkWidth(link => (link.type === "CORRELATED_FAILS" && link.hasOwnProperty("PERC_FAIL")) ? (link.PERC_FAIL/25.0) : 0.01)
-            .linkWidth(link => link.type === "CORRELATED_FAILS" ? (link.COUNT/10) : 0.01)
-            .linkDirectionalParticles(10)
-            .linkDirectionalArrowLength(4)
+            .linkWidth(link => link.type === "CORRELATED_FAILS" ? (link.COUNT/10) : 1)
+            //.linkDirectionalParticles(10)
+            .linkDirectionalArrowLength(6)
             .linkDirectionalArrowRelPos(1)
-            .linkColor(link => hexToRGB(lerpColor('#0000FF', '#FF0000', link.PERC_FAIL/100), ((link.PERC_FAIL > 50 ? link.PERC_FAIL : link.PERC_FAIL/4) /100.0).toFixed(2) ))
-            .linkCurvature(0.2)
+            .linkColor(link => link.type === "CORRELATED_FAILS" ? hexToRGB(lerpColor('#0000FF', '#FF0000', link.PERC_FAIL/100), ((link.PERC_FAIL/100.0).toFixed(2))) :
+                link.type === "PREREQUISITE" ? link.DELTA > 0 ? hexToRGB(lerpColor('#CCCCCC', '#00FF00', link.DELTA/10)):
+                        link.DELTA < 0 ? (lerpColor('#CCCCCC', '#FF0000', -link.DELTA/10)) : hexToRGB('#000000', 0.4) :
+                    hexToRGB("#FFFFFF", 0.1))
+            .linkCurvature(0)
 
             //.linkOpacity(link => link.hasOwnProperty('perc') ? 1 : 0)
 
-            //.dagMode('td')
+            .dagMode('bu')
+            //.dagNodeFilter(node => node.labels === "Programme" ? false : true)
+            //.dagLevelDistance(30)
             //.linkColor(link => link.labels === 'CORRELATED_FAILS' ? 'blue' : 'grey')
+            //.cooldownTime(10000)
             ;
 
-        const linkForce = graph
-            .d3Force('link')
-            .distance(link => (link.type === "CORRELATED_FAILS" && link.hasOwnProperty("PERC_FAIL")) ? (100.0 - link.PERC_FAIL)*5 : 100);
+         const linkForce = graph
+             .d3Force('link')
+             .strength(0.6)
+             //.distance(link => link.type === "ON_PROGRAMME" ? (link.YOS_CODE * 10) + 5 : 20 );
+             //.distance( link => (100.0 - link.PERC_FAIL));
+             .distance(link => (link.type === "CORRELATED_FAILS" && link.hasOwnProperty("PERC_FAIL")) ? (100.0 - link.PERC_FAIL)*10 : 20);
     }
 
     // Create dictionaries that will store unique Node and Relationship ID's and associate them with their object
     let nodeDic = {};
     let linkDic = {};
 
-    let query = " MATCH (c1:Course)-[r:CORRELATED_FAILS]-(c2:Course) " +
-        " WHERE r.COUNT > 10 " + //AND (r.PERC_FAIL > 80 OR r.PERC_FAIL < 40) " +
-        " RETURN c1,r,c2 "
+    let query = "MATCH (p:Programme)-[progCourse]-(pc:Course)<-[prq:PREREQUISITE]-(c:Course)" +
+        "RETURN c, pc, prq"
 
     createForceGraph();
 
@@ -141,7 +166,7 @@
             rg = ag + amount * (bg - ag),
             rb = ab + amount * (bb - ab);
         return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0).toString(16).slice(1);
-    };
+    }
 
     // Helper function to convert hexadecimal colour to RGBA
     function hexToRGB(hex, alpha) {
@@ -155,7 +180,21 @@
         }
     }
 
-    console.log(hexToRGB(lerpColor('#0000FF', '#FF0000', 80.7 / 100), 1));
+    // Helper function to set a size field based on the count of properties of a nodes relationships, used for Correlated Fails
+    function setSize(nodeType, relType) {
+        Object.keys(nodeDic).forEach(function(nodeKey) {
+            if (nodeType === nodeDic[nodeKey].labels) {
+                nodeDic[nodeKey].size = 0;
+                Object.keys(linkDic).forEach(function(linkKey) {
+                    if (relType === linkDic[linkKey].type && linkDic[linkKey].source === nodeDic[nodeKey].id) {
+                        nodeDic[nodeKey].size += linkDic[linkKey].PERC_FAIL / 100;
+                    }
+                });
+                //console.log(nodeDic[nodeKey].id + ": " + nodeDic[nodeKey].size);
+            }
+        });
+    }
+
 
 </script>
 </body>
